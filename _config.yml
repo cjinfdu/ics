@@ -106,6 +106,6 @@ theme: cactus-white
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/cjinfdu/ics.git
+  repo: git@github.com:cjinfdu/ics.git
   branch: web
   token: 

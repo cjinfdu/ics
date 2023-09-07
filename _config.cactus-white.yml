@@ -1,9 +1,9 @@
 nav:
   Home: /
   Staff: /staff/
-  Github: http://github.com/sixstars
+  Github: https://github.com/cjinfdu/ics
 
-projects_url: http://github.com/sixstars
+projects_url: https://github.com/cjinfdu/ics
 
 customize:
     gravatar:

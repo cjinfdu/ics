@@ -10,14 +10,13 @@ School of Computer Science, Fudan University
 
 ## News
 
-- **[Sep 06, 2023]** Course Website is online.
+- **[Sep 07, 2023]** Course Website is online.
 
 ## Schedule
 
 |Num|Date      |Subject              |Assignment                          |
 |:--|:---------|:--------------------|:-----------------------------------|
-|01 |09/08/2023|概论                 |[LAB0. DataLab]() (Due: 09/xx/2023) |
-|02 |09/14/2023|习题课               |[HW0. bulabula]() (Due: 09/xx/2023) |
+|01 |09/08/2023|概论                 |                                    |
 
 
 

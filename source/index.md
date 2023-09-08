@@ -10,6 +10,7 @@ School of Computer Science, Fudan University
 
 ## News
 
+- **[Sep 08, 2023]** [ICS实验入门手册](ICS实验入门手册) is released.
 - **[Sep 07, 2023]** Course Website is online.
 
 ## Schedule

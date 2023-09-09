@@ -11,17 +11,17 @@ date: 2023-09-08 00:00:00
 
 **VMWare Workstation Player**
 
-VMWare Workstation Player供个人免费使用，可在[官方网站](https://www.vmware.com/cn/products/workstation-player.html)下载。VMWare Workstation Player的图形界面设计较为清晰，不需要额外教学，建议大家自行尝试。
+VMWare Workstation Player供个人免费使用，可在[官方网站](https://www.vmware.com/cn/products/workstation-player.html)下载。VMWare Workstation Player的图形界面设计较为清晰，不需要额外教学，大家可以自行尝试。
 
-VMWare Workstation Player使用的系统镜像可以从各Linux发行版官网下载，如[Ubuntu](file:///E:/Program%20Files/Mark%20Text/resources/app.asar/dist/electron/www.ubuntu.com)。
+VMWare Workstation Player使用的系统镜像可以从各Linux发行版官网下载，如[Ubuntu](https://www.ubuntu.com)。
 
 **WSL 2**
 
-WSL 2是Microsoft推出的虚拟机方案，仅支持Windows系统，使用体验极佳。对于Windows 10 2004以上版本或Windows 11系统，可以参考WSL官方文档安装WSL 2。该文档中还包含其它一些有用的信息，建议完整浏览，特别是跨系统文件访问和跨系统网络访问。
+WSL 2是Microsoft推出的虚拟机方案，仅支持Windows系统，使用体验极佳。对于Windows 10 2004以上版本或Windows 11系统，可以参考[WSL官方文档](https://learn.microsoft.com/zh-cn/windows/wsl/install)安装WSL 2。该文档中还包含其它一些有用的信息，推荐感兴趣的同学完整浏览，特别是跨系统文件访问和跨系统网络访问。（当然，完整浏览不是实验必要的）
 
-> 如果直接wsl --install失败，请参考文档中提供的手动安装步骤和常见问题。仍有疑问欢迎联系助教。
+> 如果直接wsl --install失败，请参考文档中提供的手动安装步骤和常见问题。仍有疑问欢迎联系GPT和助教。对于C盘可用容量堪忧的同学，可以参考[这篇知乎文章](https://zhuanlan.zhihu.com/p/621873601)来把WSL迁移到别的盘。
 
-> 不建议使用WSL1
+> WSL已默认使用WSL2，其与WSl1之间的差异见[官方文档](https://learn.microsoft.com/zh-cn/windows/wsl/compare-versions)。
 
 **Mac等特殊情况**
 
@@ -31,9 +31,10 @@ VMWare Workstation Player不支持Mac。如有使用Mac系统的同学，请尝�
 
 **Linux命令行**
 
-对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但我们更推荐你使用命令行。命令行的基本用法可以参考[Linux Manual](https://man7.org/linux/man-pages/man1/intro.1.html)。
+对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但使用命令行在后续实验中是必须掌握的基础技能。命令行的基本用法可以参考[Linux Manual](https://man7.org/linux/man-pages/man1/intro.1.html)。如果你不想硬啃这个官方手册，我们也推荐通过[MIT Missing Semester](https://missing-semester-cn.github.io/)上的第一、二节入门Linux命令行使用。
 
-对于本文中涉及的几乎所有命令，都可以通过在后面加上```--help```的方式输出用法，如运行```ls --help```可输出```ls```命令的用法。
+一般来说，各种命令都可以通过在后面加上```--help```的方式输出用法，如运行```ls --help```可输出```ls```命令的用法。
+如果你需要更加详细的说明，可以通过```man```查询命令对应的文档，如```man tar```，也可以在[GNU网站](https://www.gnu.org/software/software.html)上找到相关软件的具体说明。
 另外推荐一个命令常用用法速查的命令行工具 `tldr` ，这是[GITHUB仓库地址](https://github.com/tldr-pages/tldr)，可以自行安装。（看不懂怎么安装的话 `pip3 install tldr` 即可）
 
 下列基本命令和操作较为有用，推荐同学可以试试看：
@@ -55,7 +56,7 @@ Ubuntu发行版中带有apt和dpkg包管理器，我们一般使用apt，基本�
 
 **换源**
 
-apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像，更换方法可以参考[科大镜像的说明](https://mirrors.ustc.edu.cn/help/ubuntu.html)。 **强烈建议你在换源前备份原文件**（```sudo cp /etc/apt/sources.list/etc/apt/sources.list.bak```）。
+apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像（P.S. 咱学校的CSLG未来或许会搭建复旦自己的镜像站），更换方法可以参考[科大镜像的说明](https://mirrors.ustc.edu.cn/help/ubuntu.html)。 **强烈建议你在换源前备份原文件**（```sudo cp /etc/apt/sources.list/etc/apt/sources.list.bak```），或者将文件原有的几行注释掉而非直接删除。
 
 换源完成后请使用```sudo apt update```更新一下数据。
 
@@ -67,11 +68,7 @@ apt默认的软件源服务器在国外，访问速度较慢。建议将其更�
 
 请在Linux系统中安装常用的GNU工具链。参考命令：```sudo apt install binutils diffutils gcc gdb grep g++ make tar```。
 
-可以通过```man```查询命令对应的文档，如```man tar```，也可以在[GNU网站](https://www.gnu.org/software/software.html)上找到相关软件的具体说明。
-
->建议大家自学GNU工具链中的常用命令，如grep、tar、gcc、g++、make、objdump、gdb等。
->
-
+> GNU工具链中包含了许多的常用工具，如grep、tar、gcc、g++、make、objdump、gdb等。我们在后续课程中会重点介绍其中的一些工具。
 
 ### Vim
 
@@ -79,7 +76,7 @@ Vim的基本用法为运行```vim something.txt```打开文件，然后按```i``
 
 因为学习难度较大，我们更推荐大家使用开箱即用的VS Code。
 
-Vim的用法非常丰富，如有兴趣可以自行通过[Vim学习网站](https://vim-adventures.com/)学习，也可参考[视频](https://www.bilibili.com/video/BV13t4y1t7Wg)。
+Vim的用法非常丰富，如有兴趣可以通过Vim自带的教程程序 `vimtutor` 学习（直接在命令行输入这个即可），也可以通过[Vim学习网站](https://vim-adventures.com/)学习，也可参考[视频](https://www.bilibili.com/video/BV13t4y1t7Wg)。
 
 ### Git
 
@@ -87,7 +84,7 @@ Git的常用操作可以通过[Git学习网站](https://learngitbranching.js.org
 
 你也可以使用图形化的Git界面，如VS Code的git插件。
 
-此外，要将代码库上传到云端，你可能需要注册一个[GitHub](www.github.com)或其它类似网站的账号。
+此外，要将代码库上传到云端，你可能需要注册一个[GitHub](www.github.com)或其它类似网站的账号。本课程暂时不会涉及需要使用git的场景~~，但或许你可以注册一个账号给我们的课程网站仓库一个star~~。
 
 ### SSH
 

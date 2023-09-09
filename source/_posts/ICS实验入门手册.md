@@ -27,15 +27,16 @@ WSL 2是Microsoft推出的虚拟机方案，仅支持Windows系统，使用体�
 
 VMWare Workstation Player不支持Mac。如有使用Mac系统的同学，请尝试[Docker](https://www.docker.com/)或[VirtualBox](https://www.virtualbox.org/)。
 
-后续部分实验基于x86-64架构设计。 **如有使用Mac M1芯片，或其它非x86-64指令集CPU（如龙芯——~~不会真有人用吧~~）的同学，我们建议你联系助教为你安排服务器进行实验，也可尝试UTM或QEMU，但性能可能略低。**
+后续部分实验基于x86-64架构设计。**如有使用Mac M1芯片，或其它非x86-64指令集CPU（如龙芯——~~不会真有人用吧~~）的同学，建议联系助教为你安排服务器进行实验，也可尝试UTM或QEMU，但性能可能略低。**
 
 **Linux命令行**
 
-对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但我们更推荐你使用命令行。命令行的基本用法可以参考[Linux Manual](https://man7.org/linux/man-pages/man1/intro.1.html)，更多常用命令请参考eLearning上的《Linux速查备忘手册》。
+对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但我们更推荐你使用命令行。命令行的基本用法可以参考[Linux Manual](https://man7.org/linux/man-pages/man1/intro.1.html)。
 
 对于本文中涉及的几乎所有命令，都可以通过在后面加上```--help```的方式输出用法，如运行```ls --help```可输出```ls```命令的用法。
+另外推荐一个命令常用用法速查的命令行工具 `tldr` ，这是[GITHUB仓库地址](https://github.com/tldr-pages/tldr)，可以自行安装。（看不懂怎么安装的话 `pip3 install tldr` 即可）
 
-请务必牢记下列基本命令和操作
+下列基本命令和操作较为有用，推荐同学可以试试看：
 
 * cd ls mv rm cp cat echo mkdir rmdir sudo pwd
 * 输出重定向（>） 输入重定向（<） 管道（|） 结束程序（Ctrl+C） 自动补全（Tab）
@@ -67,7 +68,6 @@ apt默认的软件源服务器在国外，访问速度较慢。建议将其更�
 请在Linux系统中安装常用的GNU工具链。参考命令：```sudo apt install binutils diffutils gcc gdb grep g++ make tar```。
 
 可以通过```man```查询命令对应的文档，如```man tar```，也可以在[GNU网站](https://www.gnu.org/software/software.html)上找到相关软件的具体说明。
-另外推荐一个命令常用用法速查的命令行工具 `tldr` ，这是[GITHUB仓库地址](https://github.com/tldr-pages/tldr)，可以自行安装。（看不懂怎么安装的话 `pip3 install tldr` 即可）
 
 >建议大家自学GNU工具链中的常用命令，如grep、tar、gcc、g++、make、objdump、gdb等。
 >

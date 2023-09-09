@@ -14,7 +14,7 @@
 <meta property="og:description" content="I. Linux系统本学期的实验需要使用Linux系统。如果你的电脑不是Linux系统，建议使用虚拟机安装Linux系统。 手册中介绍VMWare Workstation Player和WSL 2两种虚拟机方案。 建议Windows系统的同学选择WSL 2。 VMWare Workstation Player VMWare Workstation Player供个人免费使用，可在官方网站下载。VM">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-08T02:30:16.339Z">
+<meta property="article:modified_time" content="2023-09-09T02:18:10.889Z">
 <meta property="article:author" content="FDUICS-2023助教组">
 <meta name="twitter:card" content="summary">
     
@@ -143,11 +143,11 @@
 </blockquote>
 <p><strong>Mac等特殊情况</strong></p>
 <p>VMWare Workstation Player不支持Mac。如有使用Mac系统的同学，请尝试<a target="_blank" rel="noopener" href="https://www.docker.com/">Docker</a>或<a target="_blank" rel="noopener" href="https://www.virtualbox.org/">VirtualBox</a>。</p>
-<p>后续部分实验基于x86-64架构设计。 <strong>如有使用Mac M1芯片，或其它非x86-64指令集CPU（如龙芯——<del>不会真有人用吧</del>）的同学，我们建议你联系助教为你安排服务器进行实验，也可尝试UTM或QEMU，但性能可能略低。</strong></p>
+<p>后续部分实验基于x86-64架构设计。<strong>如有使用Mac M1芯片，或其它非x86-64指令集CPU（如龙芯——<del>不会真有人用吧</del>）的同学，建议联系助教为你安排服务器进行实验，也可尝试UTM或QEMU，但性能可能略低。</strong></p>
 <p><strong>Linux命令行</strong></p>
-<p>对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但我们更推荐你使用命令行。命令行的基本用法可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/intro.1.html">Linux Manual</a>，更多常用命令请参考eLearning上的《Linux速查备忘手册》。</p>
-<p>对于本文中涉及的几乎所有命令，都可以通过在后面加上<code>--help</code>的方式输出用法，如运行<code>ls --help</code>可输出<code>ls</code>命令的用法。</p>
-<p>请务必牢记下列基本命令和操作</p>
+<p>对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但我们更推荐你使用命令行。命令行的基本用法可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/intro.1.html">Linux Manual</a>。</p>
+<p>对于本文中涉及的几乎所有命令，都可以通过在后面加上<code>--help</code>的方式输出用法，如运行<code>ls --help</code>可输出<code>ls</code>命令的用法。<br>另外推荐一个命令常用用法速查的命令行工具 <code>tldr</code> ，这是<a target="_blank" rel="noopener" href="https://github.com/tldr-pages/tldr">GITHUB仓库地址</a>，可以自行安装。（看不懂怎么安装的话 <code>pip3 install tldr</code> 即可）</p>
+<p>下列基本命令和操作较为有用，推荐同学可以试试看：</p>
 <ul>
 <li>cd ls mv rm cp cat echo mkdir rmdir sudo pwd</li>
 <li>输出重定向（&gt;） 输入重定向（&lt;） 管道（|） 结束程序（Ctrl+C） 自动补全（Tab）</li>
@@ -167,7 +167,7 @@
 <p>如需要在命令行下使用代理，建议了解一下proxychains。</p>
 </blockquote>
 <h2 id="III-常用软件"><a href="#III-常用软件" class="headerlink" title="III. 常用软件"></a>III. 常用软件</h2><h3 id="GNU-Tools"><a href="#GNU-Tools" class="headerlink" title="GNU Tools"></a>GNU Tools</h3><p>请在Linux系统中安装常用的GNU工具链。参考命令：<code>sudo apt install binutils diffutils gcc gdb grep g++ make tar</code>。</p>
-<p>可以通过<code>man</code>查询命令对应的文档，如<code>man tar</code>，也可以在<a target="_blank" rel="noopener" href="https://www.gnu.org/software/software.html">GNU网站</a>上找到相关软件的具体说明。<br>另外推荐一个命令常用用法速查的命令行工具 <code>tldr</code> ，这是<a target="_blank" rel="noopener" href="https://github.com/tldr-pages/tldr">GITHUB仓库地址</a>，可以自行安装。（看不懂怎么安装的话 <code>pip3 install tldr</code> 即可）</p>
+<p>可以通过<code>man</code>查询命令对应的文档，如<code>man tar</code>，也可以在<a target="_blank" rel="noopener" href="https://www.gnu.org/software/software.html">GNU网站</a>上找到相关软件的具体说明。</p>
 <blockquote>
 <p>建议大家自学GNU工具链中的常用命令，如grep、tar、gcc、g++、make、objdump、gdb等。</p>
 </blockquote>

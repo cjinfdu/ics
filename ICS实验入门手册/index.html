@@ -14,7 +14,7 @@
 <meta property="og:description" content="I. Linux系统本学期的实验需要使用Linux系统。如果你的电脑不是Linux系统，建议使用虚拟机安装Linux系统。 手册中介绍VMWare Workstation Player和WSL 2两种虚拟机方案。 建议Windows系统的同学选择WSL 2。 VMWare Workstation Player VMWare Workstation Player供个人免费使用，可在官方网站下载。VM">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-09T02:18:10.889Z">
+<meta property="article:modified_time" content="2023-09-09T03:04:22.829Z">
 <meta property="article:author" content="FDUICS-2023助教组">
 <meta name="twitter:card" content="summary">
     
@@ -131,22 +131,22 @@
     <h2 id="I-Linux系统"><a href="#I-Linux系统" class="headerlink" title="I. Linux系统"></a>I. Linux系统</h2><p>本学期的实验需要使用Linux系统。如果你的电脑不是Linux系统，建议使用虚拟机安装Linux系统。</p>
 <p>手册中介绍VMWare Workstation Player和WSL 2两种虚拟机方案。 <strong>建议Windows系统的同学选择WSL 2。</strong></p>
 <p><strong>VMWare Workstation Player</strong></p>
-<p>VMWare Workstation Player供个人免费使用，可在<a target="_blank" rel="noopener" href="https://www.vmware.com/cn/products/workstation-player.html">官方网站</a>下载。VMWare Workstation Player的图形界面设计较为清晰，不需要额外教学，建议大家自行尝试。</p>
-<p>VMWare Workstation Player使用的系统镜像可以从各Linux发行版官网下载，如<a href="file:///E:/Program%20Files/Mark%20Text/resources/app.asar/dist/electron/www.ubuntu.com">Ubuntu</a>。</p>
+<p>VMWare Workstation Player供个人免费使用，可在<a target="_blank" rel="noopener" href="https://www.vmware.com/cn/products/workstation-player.html">官方网站</a>下载。VMWare Workstation Player的图形界面设计较为清晰，不需要额外教学，大家可以自行尝试。</p>
+<p>VMWare Workstation Player使用的系统镜像可以从各Linux发行版官网下载，如<a target="_blank" rel="noopener" href="https://www.ubuntu.com/">Ubuntu</a>。</p>
 <p><strong>WSL 2</strong></p>
-<p>WSL 2是Microsoft推出的虚拟机方案，仅支持Windows系统，使用体验极佳。对于Windows 10 2004以上版本或Windows 11系统，可以参考WSL官方文档安装WSL 2。该文档中还包含其它一些有用的信息，建议完整浏览，特别是跨系统文件访问和跨系统网络访问。</p>
+<p>WSL 2是Microsoft推出的虚拟机方案，仅支持Windows系统，使用体验极佳。对于Windows 10 2004以上版本或Windows 11系统，可以参考<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">WSL官方文档</a>安装WSL 2。该文档中还包含其它一些有用的信息，推荐感兴趣的同学完整浏览，特别是跨系统文件访问和跨系统网络访问。（当然，完整浏览不是实验必要的）</p>
 <blockquote>
-<p>如果直接wsl –install失败，请参考文档中提供的手动安装步骤和常见问题。仍有疑问欢迎联系助教。</p>
+<p>如果直接wsl –install失败，请参考文档中提供的手动安装步骤和常见问题。仍有疑问欢迎联系GPT和助教。对于C盘可用容量堪忧的同学，可以参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/621873601">这篇知乎文章</a>来把WSL迁移到别的盘。</p>
 </blockquote>
 <blockquote>
-<p>不建议使用WSL1</p>
+<p>WSL已默认使用WSL2，其与WSl1之间的差异见<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/compare-versions">官方文档</a>。</p>
 </blockquote>
 <p><strong>Mac等特殊情况</strong></p>
 <p>VMWare Workstation Player不支持Mac。如有使用Mac系统的同学，请尝试<a target="_blank" rel="noopener" href="https://www.docker.com/">Docker</a>或<a target="_blank" rel="noopener" href="https://www.virtualbox.org/">VirtualBox</a>。</p>
 <p>后续部分实验基于x86-64架构设计。<strong>如有使用Mac M1芯片，或其它非x86-64指令集CPU（如龙芯——<del>不会真有人用吧</del>）的同学，建议联系助教为你安排服务器进行实验，也可尝试UTM或QEMU，但性能可能略低。</strong></p>
 <p><strong>Linux命令行</strong></p>
-<p>对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但我们更推荐你使用命令行。命令行的基本用法可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/intro.1.html">Linux Manual</a>。</p>
-<p>对于本文中涉及的几乎所有命令，都可以通过在后面加上<code>--help</code>的方式输出用法，如运行<code>ls --help</code>可输出<code>ls</code>命令的用法。<br>另外推荐一个命令常用用法速查的命令行工具 <code>tldr</code> ，这是<a target="_blank" rel="noopener" href="https://github.com/tldr-pages/tldr">GITHUB仓库地址</a>，可以自行安装。（看不懂怎么安装的话 <code>pip3 install tldr</code> 即可）</p>
+<p>对于虚拟机和Windows 11版本的WSL 2，可以自行为Linux系统安装合适的图形界面应用，但使用命令行在后续实验中是必须掌握的基础技能。命令行的基本用法可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/intro.1.html">Linux Manual</a>。如果你不想硬啃这个官方手册，我们也推荐通过<a target="_blank" rel="noopener" href="https://missing-semester-cn.github.io/">MIT Missing Semester</a>上的第一、二节入门Linux命令行使用。</p>
+<p>一般来说，各种命令都可以通过在后面加上<code>--help</code>的方式输出用法，如运行<code>ls --help</code>可输出<code>ls</code>命令的用法。<br>如果你需要更加详细的说明，可以通过<code>man</code>查询命令对应的文档，如<code>man tar</code>，也可以在<a target="_blank" rel="noopener" href="https://www.gnu.org/software/software.html">GNU网站</a>上找到相关软件的具体说明。<br>另外推荐一个命令常用用法速查的命令行工具 <code>tldr</code> ，这是<a target="_blank" rel="noopener" href="https://github.com/tldr-pages/tldr">GITHUB仓库地址</a>，可以自行安装。（看不懂怎么安装的话 <code>pip3 install tldr</code> 即可）</p>
 <p>下列基本命令和操作较为有用，推荐同学可以试试看：</p>
 <ul>
 <li>cd ls mv rm cp cat echo mkdir rmdir sudo pwd</li>
@@ -161,22 +161,21 @@
 <p><strong>请注意使用apt时一般都需要sudo。</strong></p>
 <p>你也可以自行安装aptitude包管理器，官方文档中也有对其的介绍。该管理器用法与apt类似，且提供了图形化界面。</p>
 <p><strong>换源</strong></p>
-<p>apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像，更换方法可以参考<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/ubuntu.html">科大镜像的说明</a>。 <strong>强烈建议你在换源前备份原文件</strong>（<code>sudo cp /etc/apt/sources.list/etc/apt/sources.list.bak</code>）。</p>
+<p>apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像（P.S. 咱学校的CSLG未来或许会搭建复旦自己的镜像站），更换方法可以参考<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/ubuntu.html">科大镜像的说明</a>。 <strong>强烈建议你在换源前备份原文件</strong>（<code>sudo cp /etc/apt/sources.list/etc/apt/sources.list.bak</code>），或者将文件原有的几行注释掉而非直接删除。</p>
 <p>换源完成后请使用<code>sudo apt update</code>更新一下数据。</p>
 <blockquote>
 <p>如需要在命令行下使用代理，建议了解一下proxychains。</p>
 </blockquote>
 <h2 id="III-常用软件"><a href="#III-常用软件" class="headerlink" title="III. 常用软件"></a>III. 常用软件</h2><h3 id="GNU-Tools"><a href="#GNU-Tools" class="headerlink" title="GNU Tools"></a>GNU Tools</h3><p>请在Linux系统中安装常用的GNU工具链。参考命令：<code>sudo apt install binutils diffutils gcc gdb grep g++ make tar</code>。</p>
-<p>可以通过<code>man</code>查询命令对应的文档，如<code>man tar</code>，也可以在<a target="_blank" rel="noopener" href="https://www.gnu.org/software/software.html">GNU网站</a>上找到相关软件的具体说明。</p>
 <blockquote>
-<p>建议大家自学GNU工具链中的常用命令，如grep、tar、gcc、g++、make、objdump、gdb等。</p>
+<p>GNU工具链中包含了许多的常用工具，如grep、tar、gcc、g++、make、objdump、gdb等。我们在后续课程中会重点介绍其中的一些工具。</p>
 </blockquote>
 <h3 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a>Vim</h3><p>Vim的基本用法为运行<code>vim something.txt</code>打开文件，然后按<code>i</code>键编辑文件，此时可以直接打字，完成后按<code>ESC</code>键，输入<code>:wq</code>保存并退出，或输入<code>:q!</code>不保存直接退出。</p>
 <p>因为学习难度较大，我们更推荐大家使用开箱即用的VS Code。</p>
-<p>Vim的用法非常丰富，如有兴趣可以自行通过<a target="_blank" rel="noopener" href="https://vim-adventures.com/">Vim学习网站</a>学习，也可参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV13t4y1t7Wg">视频</a>。</p>
+<p>Vim的用法非常丰富，如有兴趣可以通过Vim自带的教程程序 <code>vimtutor</code> 学习（直接在命令行输入这个即可），也可以通过<a target="_blank" rel="noopener" href="https://vim-adventures.com/">Vim学习网站</a>学习，也可参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV13t4y1t7Wg">视频</a>。</p>
 <h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><p>Git的常用操作可以通过<a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Git学习网站</a>学习，也可参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1r3411F7kn">视频</a>。完整的官方文档可以运行man git查阅。</p>
 <p>你也可以使用图形化的Git界面，如VS Code的git插件。</p>
-<p>此外，要将代码库上传到云端，你可能需要注册一个<a href="www.github.com">GitHub</a>或其它类似网站的账号。</p>
+<p>此外，要将代码库上传到云端，你可能需要注册一个<a href="www.github.com">GitHub</a>或其它类似网站的账号。本课程暂时不会涉及需要使用git的场景<del>，但或许你可以注册一个账号给我们的课程网站仓库一个star</del>。</p>
 <h3 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h3><p>在ICS课程中没有直接使用SSH连接服务器的内容，但你可能会需要<a target="_blank" rel="noopener" href="https://docs.github.com/cn/authentication/connecting-to-github-with-ssh/">在Git中使用SSH</a>。SSH的完整文档可以通过man ssh查阅。</p>
 <p>如果你从未使用过SSH，你可能需要为自己创建一个密钥对，参考指令：<code>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</code>。密钥对的默认保存位置为 <code>~/.ssh/</code>，其中的 <code>id_rsa</code> 为私钥，<code>id_rsa.pub</code> 为公钥。 <strong>请务必妥善保管你的私钥，不要将其发给别人！</strong></p>
 <h3 id="VS-Code"><a href="#VS-Code" class="headerlink" title="VS Code"></a>VS Code</h3><p>建议安装一个好用的代码编辑器，如<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VS Code</a>。如果你使用的是VMWare，需要将VS Code安装在虚拟机里，并可以在本机上也安装一份，以便编写代码。如果你使用的是WSL 2，建议直接将VSCode装在本机上，可<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/wsl">使用本机上的VS Code编辑和运行虚拟机中的代码</a>。</p>

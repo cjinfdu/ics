@@ -1,5 +1,5 @@
 ---
-title: index
+title: ICS 2023
 ---
 
 Fall, 2023

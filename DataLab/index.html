@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Deadline: 2023-10-11 23:59:59  一、实验简介CSAPP 第一章配套实验。 本实验的目的是加深同学们对整数和浮点数二进制表示的认识。同学们需要解出若干程序谜题，编写代码并通过正确性测试，最后提交代码和报告。希望同学们多加思考，在解题过程中能学到的远不止二进制本身，还能加深对位运算的理解，以及学到一些算法知识。 实验分为基础部分和荣誉部分，如果完成所有实验的基础部分，可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ICS Lab1-DataLab">
+<meta property="og:url" content="https://cjinfdu.github.io/ics/DataLab/index.html">
+<meta property="og:site_name" content="COMP130201.02 计算机系统基础">
+<meta property="og:description" content="Deadline: 2023-10-11 23:59:59  一、实验简介CSAPP 第一章配套实验。 本实验的目的是加深同学们对整数和浮点数二进制表示的认识。同学们需要解出若干程序谜题，编写代码并通过正确性测试，最后提交代码和报告。希望同学们多加思考，在解题过程中能学到的远不止二进制本身，还能加深对位运算的理解，以及学到一些算法知识。 实验分为基础部分和荣誉部分，如果完成所有实验的基础部分，可">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-13T02:46:40.000Z">
+<meta property="article:modified_time" content="2023-09-13T03:29:49.466Z">
+<meta property="article:author" content="FDUICS-2023助教组">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/ics/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/ics/images/android-chrome-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/ics/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>ICS Lab1-DataLab</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/ics/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/ics/ICS%E5%AE%9E%E9%AA%8C%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/DataLab/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/DataLab/&text=ICS Lab1-DataLab"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/DataLab/&is_video=false&description=ICS Lab1-DataLab"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ICS Lab1-DataLab&body=Check out this article: https://cjinfdu.github.io/ics/DataLab/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/DataLab/&name=ICS Lab1-DataLab&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%83%A8%E7%BD%B2%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">二、部署实验环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.1.</span> <span class="toc-text">（1）下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.2.</span> <span class="toc-text">（2）准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-gcc"><span class="toc-number">2.2.1.</span> <span class="toc-text">确保已安装了 gcc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-make"><span class="toc-number">2.2.2.</span> <span class="toc-text">确保已安装了 make</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%AE%9E%E9%AA%8C%E6%96%87%E4%BB%B6%E8%83%BD%E6%AD%A3%E5%B8%B8-make-%E5%B9%B6%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-number">2.2.3.</span> <span class="toc-text">确保实验文件能正常 make 并运行测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9Ddlc%EF%BC%88data-lab-compiler%EF%BC%89%E8%83%BD%E6%AD%A3%E5%B8%B8%E6%89%A7%E8%A1%8C"><span class="toc-number">2.2.4.</span> <span class="toc-text">确保dlc（data lab compiler）能正常执行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E9%AA%8C%E6%8F%90%E7%A4%BA%E4%B8%8E%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">三、实验提示与说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%A6%82%E4%BD%95%E5%85%A5%E6%89%8B"><span class="toc-number">3.1.</span> <span class="toc-text">（1）如何入手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%B5%8B%E8%AF%95"><span class="toc-number">3.2.</span> <span class="toc-text">（2）测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8F%90%E4%BA%A4%E5%AE%9E%E9%AA%8C"><span class="toc-number">4.</span> <span class="toc-text">四、提交实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%86%85%E5%AE%B9%E8%A6%81%E6%B1%82"><span class="toc-number">4.1.</span> <span class="toc-text">（1）内容要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82"><span class="toc-number">4.2.</span> <span class="toc-text">（2）格式要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%89%93%E5%88%86%E8%A7%84%E5%88%99"><span class="toc-number">4.3.</span> <span class="toc-text">（3）打分规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">五、参考资料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        ICS Lab1-DataLab
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">COMP130201.02 计算机系统基础</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-09-13T02:46:40.000Z" itemprop="datePublished">2023-09-13</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Deadline: 2023-10-11 23:59:59</p>
+</blockquote>
+<h2 id="一、实验简介"><a href="#一、实验简介" class="headerlink" title="一、实验简介"></a>一、实验简介</h2><p>CSAPP 第一章配套实验。</p>
+<p>本实验的目的是加深同学们对整数和浮点数二进制表示的认识。同学们需要解出若干程序谜题，编写代码并通过正确性测试，最后提交代码和报告。希望同学们多加思考，在解题过程中能学到的远不止二进制本身，还能加深对位运算的理解，以及学到一些算法知识。</p>
+<p>实验分为基础部分和荣誉部分，如果完成所有实验的基础部分，可以保证得到B类成绩，进阶部分十分困难，推荐希望得到A类成绩的同学完成。进阶部分无法得到所有分数很正常，我们会在每次lab结束后公布班级的lab得分情况。</p>
+<p>本次实验基础部分共90分，荣誉部分共10分。</p>
+<h2 id="二、部署实验环境"><a href="#二、部署实验环境" class="headerlink" title="二、部署实验环境"></a>二、部署实验环境</h2><h3 id="（1）下载"><a href="#（1）下载" class="headerlink" title="（1）下载"></a>（1）下载</h3><p>下载链接：<a href="datalab-handout.tar">datalab-handout</a></p>
+<p>这是一个 <code>tar</code> 文件，需要对其解包。</p>
+<p>（ubuntu 虚拟机 or WSL）打开终端，进入到上述文件对应的目录下，然后执行如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xf datalab-handout.tar</span><br></pre></td></tr></table></figure>
+
+<p>会在当前目录解包出一个 <code>datalab-handout</code> 文件夹，其中的内容就是本次实验用到的的文件了。</p>
+<h3 id="（2）准备工作"><a href="#（2）准备工作" class="headerlink" title="（2）准备工作"></a>（2）准备工作</h3><h4 id="确保已安装了-gcc"><a href="#确保已安装了-gcc" class="headerlink" title="确保已安装了 gcc"></a>确保已安装了 gcc</h4><p>在终端中检查是否安装了 gcc：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -v</span><br></pre></td></tr></table></figure>
+
+<p>如果已安装，终端将会反馈版本信息，否则会反馈 <code>command not found</code> 。</p>
+<p>如未安装，尝试执行以下命令进行安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc</span><br></pre></td></tr></table></figure>
+
+<h4 id="确保已安装了-make"><a href="#确保已安装了-make" class="headerlink" title="确保已安装了 make"></a>确保已安装了 make</h4><p>检查是否安装 make，在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -v</span><br></pre></td></tr></table></figure>
+
+<p>同理，如未安装，尝试以此执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install make</span><br><span class="line">sudo apt-get install libc6 libc6-dev libc6-dev-i386</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="确保实验文件能正常-make-并运行测试"><a href="#确保实验文件能正常-make-并运行测试" class="headerlink" title="确保实验文件能正常 make 并运行测试"></a>确保实验文件能正常 make 并运行测试</h4><p>在终端中进入 <code>datalab-handout/</code>  文件夹目录。</p>
+<p>键入 <code>ls</code> 查看内容，你应当看到如下文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Driverhdrs.pm  Makefile  bits.c  btest.c  decl.c  driver.pl  ishow.c</span><br><span class="line">Driverlib.pm   README    bits.h  btest.h  dlc     fshow.c    tests.c</span><br></pre></td></tr></table></figure>
+
+<p>在终端中依次执行如下命令，以生成可执行文件并执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp; make all</span><br><span class="line">./btest</span><br></pre></td></tr></table></figure>
+
+<p>如果过程顺利，最后会输出测试结果，最后一行为 <code>Total points: 0/96</code> 。</p>
+<p>如果过程中出现如下报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ld: cannot found -lgcc</span><br></pre></td></tr></table></figure>
+
+<p>那么尝试执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-multilib</span><br></pre></td></tr></table></figure>
+
+<h4 id="确保dlc（data-lab-compiler）能正常执行"><a href="#确保dlc（data-lab-compiler）能正常执行" class="headerlink" title="确保dlc（data lab compiler）能正常执行"></a>确保dlc（data lab compiler）能正常执行</h4><p>依然在 <code>datalab-handout/</code>  目录下，</p>
+<p>执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dlc bits.c</span><br></pre></td></tr></table></figure>
+
+<p>如果执行立即结束并且没有任何反馈，则没有问题。</p>
+<h2 id="三、实验提示与说明"><a href="#三、实验提示与说明" class="headerlink" title="三、实验提示与说明"></a>三、实验提示与说明</h2><h3 id="（1）如何入手"><a href="#（1）如何入手" class="headerlink" title="（1）如何入手"></a>（1）如何入手</h3><p>推荐阅读顺序：本文档 &gt; <code>README</code> &gt; <code>bits.c</code> 的注释部分。</p>
+<p><code>README</code> 是原书配套lab的原版文件，对实验文件做了较为详细的介绍。</p>
+<p><code>bits.c</code> 是同学们唯一需要编辑的文件，其中包含了谜题规则介绍， 22 个谜题以及谜题内容、难度、分数等。</p>
+<p>上面的两个文件请务必仔细阅读。</p>
+<p>注意到，每一个谜题包含了如下信息：</p>
+<ul>
+<li><p>能使用的运算符。</p>
+</li>
+<li><p>能使用的运算符总数量。</p>
+</li>
+<li><p>能使用的常数的值域范围。</p>
+</li>
+<li><p>变量类型。</p>
+</li>
+<li><p>能否使用控制语句（如 <code>if</code> ）等。</p>
+</li>
+</ul>
+<h3 id="（2）测试"><a href="#（2）测试" class="headerlink" title="（2）测试"></a>（2）测试</h3><ul>
+<li><p>除了 <code>bits.c</code> ，你不应该编辑任何其余文件。</p>
+</li>
+<li><p>完成谜题后，需要检验自己的代码是否正确：</p>
+<ul>
+<li><p>首先，执行下述指令，检查每个函数使用的运算符类型、数目是否符合要求：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dlc -e bits.c</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如没有任何报错，按顺序执行下述指令，测试每个函数的正确性：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp; make all</span><br><span class="line">./btest</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>btest</code> 执行时会给出每个谜题（函数）是否通过测试（未通过时会给出测试数据），并且会计算你的最终得分。</p>
+</li>
+<li><p><code>btest</code> 给出的得分最高为96分，对于进阶部分的三道题，如果操作数达到挑战要求，每题分别有额外的1、1、2分加分，总计100分。你可以使用<code>dlc</code>检查自己的操作数量。</p>
+</li>
+</ul>
+</li>
+<li><p>你可以利用上 <code>./ishow</code> 和 <code>./fshow</code> 来帮助你调试（用法见 <code>README</code>）。</p>
+</li>
+</ul>
+<h2 id="四、提交实验"><a href="#四、提交实验" class="headerlink" title="四、提交实验"></a>四、提交实验</h2><h3 id="（1）内容要求"><a href="#（1）内容要求" class="headerlink" title="（1）内容要求"></a>（1）内容要求</h3><p>你需要提交至少两份文件，包含你的 <code>bits.c</code> 和一份实验报告。</p>
+<p>实验报告应该包含以下内容：</p>
+<ul>
+<li><p>实验标题，你的姓名，学号。</p>
+</li>
+<li><p>你在终端中执行 <code>./dlc -e bits.c</code> 后的截图。</p>
+</li>
+<li><p>你在终端中执行 <code>./btest</code> 后的截图。</p>
+</li>
+<li><p>描述你实现每个函数的思路，要求简结清晰。</p>
+</li>
+<li><p>如果有，请务必在报告中列出引用的内容以及参考的资料。</p>
+</li>
+<li><p>对本实验的感受（可选）。</p>
+</li>
+<li><p>对助教们的建议（可选）。</p>
+</li>
+</ul>
+<h3 id="（2）格式要求"><a href="#（2）格式要求" class="headerlink" title="（2）格式要求"></a>（2）格式要求</h3><p>可提交 <code>.md</code> 文件或者 <code>.pdf</code> 文件。不要提交 <code>.doc</code> 或 <code>.docx</code> 文件。</p>
+<p>将你的 <code>bits.c</code> 和实验报告打包成 <code>tar</code> 文件。</p>
+<blockquote>
+<p>请注意，不要以为打包成 zip 后把后缀改成 tar 就能得到一个 tar 文件，这是两种不一样的文件格式！<br>实际上标识一个文件的，除了他的后缀名，还有文件内容的头部几个字节，这被称为<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Magic_number_(programming)">魔数（Magic Number）</a>，<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_file_signatures">这个列表</a>列出了迄今为止所有约定的魔数。</p>
+</blockquote>
+<p>可按如下流程操作：</p>
+<ol>
+<li><p>新建文件夹，以你的学号命名（例如 <code>22307130001</code>）。将你要提交的两份文件放入文件夹中。</p>
+</li>
+<li><p>在终端中进入到目录 <code>22307130001/</code>，执行 <code>cd ..</code> 返回到上级目录，然后：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -cf 22307130001.tar 22307130001/</span><br></pre></td></tr></table></figure>
+
+<p>这将得到一个名为 <code>22307130001.tar</code> 的文件。（该学号仅为示例，请使用你的学号）</p>
+</li>
+<li><p>在 elearning 上对应作业处提交打包完成的 <code>tar</code> 文件。</p>
+</li>
+</ol>
+<h3 id="（3）打分规则"><a href="#（3）打分规则" class="headerlink" title="（3）打分规则"></a>（3）打分规则</h3><ul>
+<li><p>实验谜题的正确性占比 85% ，实验报告和代码风格占 15% 。（C语言和C++不同，一个作用域下的所有局部变量的声明应该放在最上面）</p>
+</li>
+<li><p>实验报告的字数和打分无明显关系，报告的内容清晰即可，过于冗长的报告可能是减分项。</p>
+</li>
+<li><p>对每道谜题请先做思考，不要立即使用搜索引擎。</p>
+</li>
+<li><p>不允许抄袭其它人的代码，一旦发现，零分处理。</p>
+</li>
+</ul>
+<h2 id="五、参考资料"><a href="#五、参考资料" class="headerlink" title="五、参考资料"></a>五、参考资料</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">http://csapp.cs.cmu.edu/3e/labs.html</a> （lab来源，本实验相较原文件有改动）</p>
+</li>
+<li><p>本文档编写时参考了22年的实验文档。</p>
+</li>
+<li><p>22年的文档编写时参考了20年的实验文档。</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%83%A8%E7%BD%B2%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">二、部署实验环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.1.</span> <span class="toc-text">（1）下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.2.</span> <span class="toc-text">（2）准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-gcc"><span class="toc-number">2.2.1.</span> <span class="toc-text">确保已安装了 gcc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-make"><span class="toc-number">2.2.2.</span> <span class="toc-text">确保已安装了 make</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%AE%9E%E9%AA%8C%E6%96%87%E4%BB%B6%E8%83%BD%E6%AD%A3%E5%B8%B8-make-%E5%B9%B6%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="toc-number">2.2.3.</span> <span class="toc-text">确保实验文件能正常 make 并运行测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9Ddlc%EF%BC%88data-lab-compiler%EF%BC%89%E8%83%BD%E6%AD%A3%E5%B8%B8%E6%89%A7%E8%A1%8C"><span class="toc-number">2.2.4.</span> <span class="toc-text">确保dlc（data lab compiler）能正常执行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E9%AA%8C%E6%8F%90%E7%A4%BA%E4%B8%8E%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">三、实验提示与说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%A6%82%E4%BD%95%E5%85%A5%E6%89%8B"><span class="toc-number">3.1.</span> <span class="toc-text">（1）如何入手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%B5%8B%E8%AF%95"><span class="toc-number">3.2.</span> <span class="toc-text">（2）测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8F%90%E4%BA%A4%E5%AE%9E%E9%AA%8C"><span class="toc-number">4.</span> <span class="toc-text">四、提交实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%86%85%E5%AE%B9%E8%A6%81%E6%B1%82"><span class="toc-number">4.1.</span> <span class="toc-text">（1）内容要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82"><span class="toc-number">4.2.</span> <span class="toc-text">（2）格式要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%89%93%E5%88%86%E8%A7%84%E5%88%99"><span class="toc-number">4.3.</span> <span class="toc-text">（3）打分规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">五、参考资料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/DataLab/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/DataLab/&text=ICS Lab1-DataLab"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/DataLab/&is_video=false&description=ICS Lab1-DataLab"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ICS Lab1-DataLab&body=Check out this article: https://cjinfdu.github.io/ics/DataLab/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/DataLab/&title=ICS Lab1-DataLab"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/DataLab/&name=ICS Lab1-DataLab&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 FDUICS-2023助教组
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/ics/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/ics/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/ics/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/ics/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/ics/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/ics/js/main.js"></script>
+
+
+
+
+

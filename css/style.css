@@ -332,7 +332,7 @@
 .content h2,
 .content .h2 {
   position: relative;
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: bold;
   text-transform: none;
   letter-spacing: normal;
@@ -342,89 +342,90 @@
   display: block;
 }
 .content h3 {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #383838;
 }
 .content h4,
 .content h5,
 .content h6 {
-  font-size: 0.9rem;
-  font-weight: normal;
-  color: #8c8c8c;
-  border-bottom: 1px dashed #8c8c8c;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #383838;
+}
+# border-bottom: 1px dashed $color-light {
   display: inline;
   text-decoration: none;
 }
-.content h3,
-.content h4,
-.content h5,
-.content h6 {
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0.9rem;
   margin-bottom: 0.5rem;
 }
-.content hr {
-  border: 1px dashed #8c8c8c;
+hr {
+  border: 1px dashed #1150c2;
 }
-.content strong {
+strong {
   font-weight: bold;
 }
-.content em,
-.content cite {
+em,
+cite {
   font-style: italic;
 }
-.content sup,
-.content sub {
+sup,
+sub {
   font-size: 0.75em;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
-.content sup {
+sup {
   top: -0.5em;
 }
-.content sub {
+sub {
   bottom: -0.2em;
 }
-.content small {
+small {
   font-size: 0.85em;
 }
-.content acronym,
-.content abbr {
+acronym,
+abbr {
   border-bottom: 1px dotted;
 }
-.content ul,
-.content ol,
-.content dl {
+ul,
+ol,
+dl {
   line-height: 1.725;
 }
-.content ul ul,
-.content ol ul,
-.content ul ol,
-.content ol ol {
+ul ul,
+ol ul,
+ul ol,
+ol ol {
   margin-top: 0;
   margin-bottom: 0;
 }
-.content ol {
+ol {
   list-style: decimal;
 }
-.content dt {
+dt {
   font-weight: bold;
 }
-.content table {
+table {
   width: 100%;
   font-size: 14px;
   border-collapse: collapse;
   text-align: left;
 }
-.content th {
+th {
   font-size: 15px;
   font-weight: bold;
   color: #383838;
   border-bottom: 1px dashed #ccc;
   padding: 8px 8px;
 }
-.content td {
+td {
   border-bottom: none;
   padding: 9px 8px 0px 8px;
 }
@@ -546,6 +547,82 @@ body {
   p {
     text-align: justify;
   }
+}
+# border-bottom: 1px dashed $color-light {
+  display: inline;
+  text-decoration: none;
+}
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+hr {
+  border: 1px dashed #1150c2;
+}
+strong {
+  font-weight: bold;
+}
+em,
+cite {
+  font-style: italic;
+}
+sup,
+sub {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.2em;
+}
+small {
+  font-size: 0.85em;
+}
+acronym,
+abbr {
+  border-bottom: 1px dotted;
+}
+ul,
+ol,
+dl {
+  line-height: 1.725;
+}
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+ol {
+  list-style: decimal;
+}
+dt {
+  font-weight: bold;
+}
+table {
+  width: 100%;
+  font-size: 14px;
+  border-collapse: collapse;
+  text-align: left;
+}
+th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #383838;
+  border-bottom: 1px dashed #ccc;
+  padding: 8px 8px;
+}
+td {
+  border-bottom: none;
+  padding: 9px 8px 0px 8px;
 }
 #header {
   max-width: 59rem;
@@ -1051,7 +1128,7 @@ article header .meta {
   margin-bottom: 1rem;
 }
 article header .meta * {
-  color: #8c8c8c;
+  color: #1150c2;
   font-size: 0.85rem;
 }
 article header .author {
@@ -1281,7 +1358,7 @@ article .content .caption {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  border: solid 1px #8c8c8c;
+  border: solid 1px #1150c2;
   padding: 4px 7px;
   outline: none;
   -webkit-appearance: none;

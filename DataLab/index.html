@@ -14,7 +14,7 @@
 <meta property="og:description" content="Deadline: 2023-10-11 23:59:59  一、实验简介CSAPP 第二章配套实验。 本实验的目的是加深同学们对整数和浮点数二进制表示的认识。同学们需要解出若干程序谜题，编写代码并通过正确性测试，最后提交代码和报告。希望同学们多加思考，在解题过程中能学到的远不止二进制本身，还能加深对位运算的理解，以及学到一些算法知识。 实验分为基础部分和荣誉部分，如果完成所有实验的基础部分，可">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-13T02:46:40.000Z">
-<meta property="article:modified_time" content="2023-09-14T01:38:04.823Z">
+<meta property="article:modified_time" content="2023-09-14T04:20:46.571Z">
 <meta property="article:author" content="FDUICS-2023助教组">
 <meta name="twitter:card" content="summary">
     
@@ -203,7 +203,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./dlc -e bits.c</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>如没有任何报错，按顺序执行下述指令，测试每个函数的正确性：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp; make all</span><br><span class="line">./btest</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp;&amp; make all</span><br><span class="line">./btest</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>btest</code> 执行时会给出每个谜题（函数）是否通过测试（未通过时会给出测试数据），并且会计算你的最终得分。</p>
 </li>

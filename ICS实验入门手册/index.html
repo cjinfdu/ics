@@ -14,7 +14,7 @@
 <meta property="og:description" content="I. Linux系统本学期的实验需要使用Linux系统。如果你的电脑不是Linux系统，建议使用虚拟机安装Linux系统。 手册中介绍VMWare Workstation Player和WSL 2两种虚拟机方案。 建议Windows系统的同学选择WSL 2。 VMWare Workstation Player VMWare Workstation Player供个人免费使用，可在官方网站下载。VM">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-14T00:43:18.163Z">
+<meta property="article:modified_time" content="2023-09-14T02:07:38.362Z">
 <meta property="article:author" content="FDUICS-2023助教组">
 <meta name="twitter:card" content="summary">
     
@@ -96,7 +96,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-Linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">I. Linux系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">II. 包管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#III-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">III. 常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU-Tools"><span class="toc-number">3.1.</span> <span class="toc-text">GNU Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vim"><span class="toc-number">3.2.</span> <span class="toc-text">Vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git"><span class="toc-number">3.3.</span> <span class="toc-text">Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH"><span class="toc-number">3.4.</span> <span class="toc-text">SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-Code"><span class="toc-number">3.5.</span> <span class="toc-text">VS Code</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-Linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">I. Linux系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">II. 包管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%A2%E6%BA%90%EF%BC%88%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">换源（非常重要！！！！！！！！！！）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#III-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">III. 常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU-Tools"><span class="toc-number">3.1.</span> <span class="toc-text">GNU Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vim"><span class="toc-number">3.2.</span> <span class="toc-text">Vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git"><span class="toc-number">3.3.</span> <span class="toc-text">Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH"><span class="toc-number">3.4.</span> <span class="toc-text">SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-Code"><span class="toc-number">3.5.</span> <span class="toc-text">VS Code</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -159,12 +159,14 @@
 <h2 id="II-包管理器"><a href="#II-包管理器" class="headerlink" title="II. 包管理器"></a>II. 包管理器</h2><blockquote>
 <p>以Ubuntu系统的apt包管理器为例，其它发行版可以自行查找有关资料。</p>
 </blockquote>
+<p>包管理器全称是软件包管理器，顾名思义是用来管理软件包的软件。在大家熟悉的Windows系统中，通常下载软件就是去软件的官网上下载。而在Linux系统中，最常见的安装软件的方式是使用软件包管理器从“软件仓库”中下载。包管理器会负责一个软件的全生命周期，包括下载、安装、依赖关系、卸载、更新等等。</p>
 <p>Ubuntu发行版中带有apt和dpkg包管理器，我们一般使用apt，基本用法可以参考<a target="_blank" rel="noopener" href="https://ubuntu.com/server/docs/package-management">Ubuntu包管理器文档</a>中的apt一节。完整的官方文档可以运行man apt查阅。</p>
 <p><strong>请注意使用apt时一般都需要sudo。</strong></p>
 <p>你也可以自行安装aptitude包管理器，官方文档中也有对其的介绍。该管理器用法与apt类似，且提供了图形化界面。</p>
-<p><strong>换源</strong></p>
-<p>apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像（P.S. 咱学校的CSLG未来或许会搭建复旦自己的镜像站），更换方法可以参考<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/ubuntu.html">科大镜像的说明</a>。 <strong>强烈建议你在换源前备份原文件</strong>（<code>sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</code>），或者将文件原有的几行注释掉而非直接删除。</p>
-<p>换源完成后请使用<code>sudo apt update</code>更新一下数据。</p>
+<h3 id="换源（非常重要！！！！！！！！！！）"><a href="#换源（非常重要！！！！！！！！！！）" class="headerlink" title="换源（非常重要！！！！！！！！！！）"></a>换源（非常重要！！！！！！！！！！）</h3><p>apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像（P.S. 咱学校的CSLG未来或许会搭建复旦自己的镜像站），Ubuntu的更换方法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line">sudo sed -i &#x27;s@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g&#x27; /etc/apt/sources.list</span><br><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<p>其中第一行是将原来的文件进行备份，这是一个好习惯！<br>上面几行的详细说明可以参考<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/ubuntu.html">这个链接</a>，如果你使用其他发行版，可以去这个链接中寻找相关说明。</p>
 <blockquote>
 <p>如需要在命令行下使用代理，建议了解一下proxychains。</p>
 </blockquote>
@@ -184,7 +186,7 @@
 <p>VS Code会提示你安装常用插件，本文不再给出插件安装的建议。</p>
 <p>关于VS Code安装与配置的更多问题，可参考<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs">VS Code官方文档</a>。</p>
 <blockquote>
-<p>WSL2常用用法：<code>code some.txt</code> 即可用Windows上的VSCode打开文件。</p>
+<p>WSL2常用用法：<br><code>code some.txt</code> 即可用Windows上的VSCode打开文件。<br><code>code .</code> 即可用Windows上的VSCode打开当前文件夹。</p>
 </blockquote>
 
   </div>
@@ -210,7 +212,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-Linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">I. Linux系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">II. 包管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#III-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">III. 常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU-Tools"><span class="toc-number">3.1.</span> <span class="toc-text">GNU Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vim"><span class="toc-number">3.2.</span> <span class="toc-text">Vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git"><span class="toc-number">3.3.</span> <span class="toc-text">Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH"><span class="toc-number">3.4.</span> <span class="toc-text">SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-Code"><span class="toc-number">3.5.</span> <span class="toc-text">VS Code</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-Linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">I. Linux系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#II-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">II. 包管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%A2%E6%BA%90%EF%BC%88%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">换源（非常重要！！！！！！！！！！）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#III-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">III. 常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU-Tools"><span class="toc-number">3.1.</span> <span class="toc-text">GNU Tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vim"><span class="toc-number">3.2.</span> <span class="toc-text">Vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git"><span class="toc-number">3.3.</span> <span class="toc-text">Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH"><span class="toc-number">3.4.</span> <span class="toc-text">SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-Code"><span class="toc-number">3.5.</span> <span class="toc-text">VS Code</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

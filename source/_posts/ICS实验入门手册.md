@@ -49,17 +49,26 @@ VMWare Workstation Player不支持Mac。如有使用Mac系统的同学，请尝�
 
 > 以Ubuntu系统的apt包管理器为例，其它发行版可以自行查找有关资料。
 
+包管理器全称是软件包管理器，顾名思义是用来管理软件包的软件。在大家熟悉的Windows系统中，通常下载软件就是去软件的官网上下载。而在Linux系统中，最常见的安装软件的方式是使用软件包管理器从“软件仓库”中下载。包管理器会负责一个软件的全生命周期，包括下载、安装、依赖关系、卸载、更新等等。
+
 Ubuntu发行版中带有apt和dpkg包管理器，我们一般使用apt，基本用法可以参考[Ubuntu包管理器文档](https://ubuntu.com/server/docs/package-management)中的apt一节。完整的官方文档可以运行man apt查阅。
 
 **请注意使用apt时一般都需要sudo。**
 
 你也可以自行安装aptitude包管理器，官方文档中也有对其的介绍。该管理器用法与apt类似，且提供了图形化界面。
 
-**换源**
+### 换源（非常重要！！！！！！！！！！）
 
-apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像（P.S. 咱学校的CSLG未来或许会搭建复旦自己的镜像站），更换方法可以参考[科大镜像的说明](https://mirrors.ustc.edu.cn/help/ubuntu.html)。 **强烈建议你在换源前备份原文件**（```sudo cp /etc/apt/sources.list/etc/apt/sources.list.bak```），或者将文件原有的几行注释掉而非直接删除。
+apt默认的软件源服务器在国外，访问速度较慢。建议将其更换为科大镜像（P.S. 咱学校的CSLG未来或许会搭建复旦自己的镜像站），Ubuntu的更换方法如下：
 
-换源完成后请使用```sudo apt update```更新一下数据。
+```shell
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+sudo sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list
+sudo apt update
+```
+
+其中第一行是将原来的文件进行备份，这是一个好习惯！
+上面几行的详细说明可以参考[这个链接](https://mirrors.ustc.edu.cn/help/ubuntu.html)，如果你使用其他发行版，可以去这个链接中寻找相关说明。
 
 > 如需要在命令行下使用代理，建议了解一下proxychains。
 
@@ -101,3 +110,6 @@ VS Code会提示你安装常用插件，本文不再给出插件安装的建议�
 
 关于VS Code安装与配置的更多问题，可参考[VS Code官方文档](https://code.visualstudio.com/docs)。
 
+> WSL2常用用法：
+> `code some.txt` 即可用Windows上的VSCode打开文件。
+> `code .` 即可用Windows上的VSCode打开当前文件夹。

@@ -7,7 +7,7 @@ date: 2023-09-13 10:46:40
 
 ## 一、实验简介
 
-CSAPP 第一章配套实验。
+CSAPP 第二章配套实验。
 
 本实验的目的是加深同学们对整数和浮点数二进制表示的认识。同学们需要解出若干程序谜题，编写代码并通过正确性测试，最后提交代码和报告。希望同学们多加思考，在解题过程中能学到的远不止二进制本身，还能加深对位运算的理解，以及学到一些算法知识。
 
@@ -79,7 +79,7 @@ Driverlib.pm   README    bits.h  btest.h  dlc     fshow.c    tests.c
 在终端中依次执行如下命令，以生成可执行文件并执行：
 
 ```shell
-make clean & make all
+make clean && make all
 ./btest
 ```
 
@@ -89,6 +89,10 @@ make clean & make all
 
 ```shell
 /usr/bin/ld: cannot found -lgcc
+```
+或
+```shell
+fatal error: bits/libc-header-start.h: No such file or directory
 ```
 
 那么尝试执行：
@@ -145,7 +149,7 @@ sudo apt install gcc-multilib
   * 如没有任何报错，按顺序执行下述指令，测试每个函数的正确性：
 
     ```shell
-    make clean & make all
+    make clean && make all
     ./btest
     ```
 

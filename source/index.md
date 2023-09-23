@@ -25,7 +25,7 @@ School of Computer Science, Fudan University
 |03 |09/15/2023|数的表示 II            |                                                    |
 |04 |09/21/2023|DataLab答疑            |                                                    |
 |05 |09/22/2023|机器码 I               |                                                    |
-
+|06 |09/28/2023|第二章习题讲解         |                                                    |
 
 ---
 

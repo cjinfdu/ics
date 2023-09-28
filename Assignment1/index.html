@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="2.37原代码用malloc申请了$$指定类型的大小\times个数$$字节的空间，如果成功分配了空间，就对这段空间进行赋值。  需要注意的是，malloc定义中，参数类型是int，所以A.中即使把asize改成了64位数据类型，依然不能赋值足够的空间。换句话说，只要用同一个分配空间的函数，我们就永远无法赋值超过$2^{32}-1$字节的空间。我们只能让函数在遇到分配超过$2^{32}-1$字节的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9.28 第二章习题">
+<meta property="og:url" content="https://cjinfdu.github.io/ics/Assignment1/index.html">
+<meta property="og:site_name" content="COMP130201.02 计算机系统基础">
+<meta property="og:description" content="2.37原代码用malloc申请了$$指定类型的大小\times个数$$字节的空间，如果成功分配了空间，就对这段空间进行赋值。  需要注意的是，malloc定义中，参数类型是int，所以A.中即使把asize改成了64位数据类型，依然不能赋值足够的空间。换句话说，只要用同一个分配空间的函数，我们就永远无法赋值超过$2^{32}-1$字节的空间。我们只能让函数在遇到分配超过$2^{32}-1$字节的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-28T01:40:00.000Z">
+<meta property="article:modified_time" content="2023-09-28T01:38:14.302Z">
+<meta property="article:author" content="FDUICS-2023助教组">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/ics/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/ics/images/android-chrome-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/ics/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>9.28 第二章习题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/ics/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/ics/DataLab/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/Assignment1/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/Assignment1/&text=9.28 第二章习题"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/Assignment1/&is_video=false&description=9.28 第二章习题"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=9.28 第二章习题&body=Check out this article: https://cjinfdu.github.io/ics/Assignment1/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/Assignment1/&name=9.28 第二章习题&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-37"><span class="toc-number">1.</span> <span class="toc-text">2.37</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-71"><span class="toc-number">2.</span> <span class="toc-text">2.71</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-75"><span class="toc-number">3.</span> <span class="toc-text">2.75</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-77"><span class="toc-number">4.</span> <span class="toc-text">2.77</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-83"><span class="toc-number">5.</span> <span class="toc-text">2.83</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-86"><span class="toc-number">6.</span> <span class="toc-text">2.86</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        9.28 第二章习题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">COMP130201.02 计算机系统基础</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-09-28T01:40:00.000Z" itemprop="datePublished">2023-09-28</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="2-37"><a href="#2-37" class="headerlink" title="2.37"></a>2.37</h2><p>原代码用<code>malloc</code>申请了$$指定类型的大小\times个数$$字节的空间，如果成功分配了空间，就对这段空间进行赋值。 </p>
+<p>需要注意的是，<code>malloc</code>定义中，参数类型是<code>int</code>，所以<code>A.</code>中即使把<code>asize</code>改成了64位数据类型，依然不能赋值足够的空间。换句话说，只要用同一个分配空间的函数，我们就永远无法赋值超过$2^{32}-1$字节的空间。我们只能让函数在遇到分配超过$2^{32}-1$字节的时候返回一个表示“执行失败”的空指针。</p>
+<p>需要注意的是，在C&#x2F;C++语言的库中，表示数量一类的变量用的都是无符号类型。那么下面的代码就会出现一些问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt;num;</span><br><span class="line"><span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/*中间执行若干操作*/</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>;i &lt;= num.<span class="built_in">size</span>() - <span class="number">1</span>;i++) &#123;</span><br><span class="line">    sum += num[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>应该如何修改这段代码？</p>
+<h2 id="2-71"><a href="#2-71" class="headerlink" title="2.71"></a>2.71</h2><p>原代码最后只保留了8个字节，没有符号扩展为32位。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> bits = bytenum &lt;&lt; <span class="number">3</span>;</span><br><span class="line"><span class="keyword">return</span> word &gt;&gt; bits &lt;&lt; <span class="number">24</span> &gt;&gt; (<span class="number">24</span> - bits);</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-75"><a href="#2-75" class="headerlink" title="2.75"></a>2.75</h2><p>如果x和y都是正数，显然他们有没有符号都没区别了。我们主要讨论负数的情况。<br>考虑<code>signed_high_prod</code>是如何实现的。最终的返回值其实是$2w$的高$w$位，那么计算时<code>signed_high_prod</code>需要先符号扩展为$2w$位，也就是在前面补了$w$个1（二进制意义下）。<br>我们以16位扩展到32位举例。设原来是32位的0x$p_0p_1p_2p_3$和0x$q_0q_1q_2q_3$，在<code>signed_high_prod</code>函数中符号扩展后变成了0xFFFF$p_0p_1p_2p_3$和0xFFFF$q_0q_1q_2q_3$。但是我们要计算的是无符号数，也就是说它不应该被扩展，我们希望的是在前面填0而非1。<br>下一步，如果我们能让两个乘数的高16位被加上1，他们就相当于变成了没有被扩展过的无符号数了。也就是说我们要给这两个数相乘的结果先加上0xFFFF$q_0q_1q_2q_3\times (1&lt;&lt;16)$，根据乘法分配律，原式变成了0x0000$p_0p_1p_2p_3\times$0xFFFF$q_0q_1q_2q_3$，那么再加上0x0000$p_0p_1p_2p_3\times (1&lt;&lt;16)$，再用乘法分配律，就变成了我们希望的0x0000$p_0p_1p_2p_3$和0x0000$q_0q_1q_2q_3$。<br>我们回顾我们加上的两个乘数，化简之后其实就是0x$p_0p_1p_2p_3$0000和0x$q_0q_1q_2q_3$0000。我们要写<code>unsigned_high_prod</code>，其实就是把<code>signed_high_prod</code>的结果加上这两个数抹去后16位的结果。</p>
+<p>参考代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">unsigned</span> <span class="title">unsigned_high_prod</span><span class="params">(<span class="type">unsigned</span> x, <span class="type">unsigned</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="type">signed</span> sig_x = x &gt;&gt; (w - <span class="number">1</span>);<span class="comment">//如果符号位是1，sig_x的值就是1</span></span><br><span class="line">    <span class="type">signed</span> sig_y = y &gt;&gt; (w - <span class="number">1</span>);</span><br><span class="line">    <span class="type">signed</span> signed_prod = <span class="built_in">signed_high_prod</span>(x, y);</span><br><span class="line">    <span class="keyword">return</span> signed_prod + x * sig_y + y * sig_x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-77"><a href="#2-77" class="headerlink" title="2.77"></a>2.77</h2><p>不难发现位运算和乘法运算是有一定关系的。十进制下乘以$10$就相当于原数末尾追加一个$0$，同样地，二进制下左移一位相当于乘以$10_{(2)}$。</p>
+<p>换句话讲，我们可以把乘数的二进制表示展开，于是有$$a\times b&#x3D;a\times (2^0b_0+2^1b_1+\cdots +2^kb_k)$$<br>这里的$b_i$要么是0，要么是1，于是以上的公式通过一系列变换后可以用以下的公式表示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">mul</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt;= <span class="number">31</span>;++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(y &amp; (<span class="number">1</span> &lt;&lt; i))&#123;</span><br><span class="line">            ans += x &lt;&lt; i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实际的CPU中是有专门的电路来计算乘法的（乘法消耗的时间依然是加法的数倍），因此我们一般不需要这样写。但是，整数的乘方也是我们常见的运算之一，CPU却没有这样的电路。你能根据上面的推导，举一反三，写出如何高效计算一个数的幂（指数为自然数）的方法吗？</p>
+<p>参考代码：计算$a^b;(mod;p)$</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">mul</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> p)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(; b; b &gt;&gt;= <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(b &amp; <span class="number">1</span>) ans = ans * a % p;</span><br><span class="line">        a = a * a % p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意如果p比较大，中间过程可能溢出，需要使用<code>long long</code>。不同于暴力求解，在<code>b</code>是32位时，这串代码中的<code>for</code>最多循环32次，非常高效。甚至，如果$a$和$b$都是矩阵，上述推理依然成立。你可以再次推导一遍，但是在学习“代数结构”这一板块的数学知识后（将在大二下学习），你可能对这些知识的理解会更加深刻。</p>
+<h2 id="2-83"><a href="#2-83" class="headerlink" title="2.83"></a>2.83</h2><p>我们把每$k$位看做一个整体，前$k$位中，每一位在十进制下的值依次为$$y_1\times \frac{1}{2},; y_2\times \frac{1}{4},; \cdots,; y_k\times \frac{1}{2^k}$$</p>
+<p>那么接下来$k$位代表的值就是上式求和再乘$1&#x2F;2^k$，以此类推，记上式的值为$X$，所以整个串的数值就是$$Y&#x3D;X+\frac{X}{2^k}+\frac{\frac{X}{2^k}}{2^k}+\cdots&#x3D;\lim_{n\to+\infty}\frac{X(1-(\frac{1}{2^k})^n)}{1-\frac{1}{2^k}}&#x3D;\frac{X}{1-\frac{1}{2^k}}$$</p>
+<h2 id="2-86"><a href="#2-86" class="headerlink" title="2.86"></a>2.86</h2><p>类比32位浮点数阶码（8位）的-126~127，80位浮点数阶码（15位）是-16382~16383。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-37"><span class="toc-number">1.</span> <span class="toc-text">2.37</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-71"><span class="toc-number">2.</span> <span class="toc-text">2.71</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-75"><span class="toc-number">3.</span> <span class="toc-text">2.75</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-77"><span class="toc-number">4.</span> <span class="toc-text">2.77</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-83"><span class="toc-number">5.</span> <span class="toc-text">2.83</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-86"><span class="toc-number">6.</span> <span class="toc-text">2.86</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/Assignment1/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/Assignment1/&text=9.28 第二章习题"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/Assignment1/&is_video=false&description=9.28 第二章习题"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=9.28 第二章习题&body=Check out this article: https://cjinfdu.github.io/ics/Assignment1/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/Assignment1/&title=9.28 第二章习题"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/Assignment1/&name=9.28 第二章习题&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 FDUICS-2023助教组
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/ics/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/ics/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/ics/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/ics/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/ics/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/ics/js/main.js"></script>
+
+
+
+
+

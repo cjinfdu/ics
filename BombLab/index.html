@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Deadline：2023-10-26 23:59:59  一、实验简介 CSAPP 第三章配套实验。 本学期，我们对 csapp 的经典 bomblab 进行了全面升级（除了难度）。你将假扮一位精通 x86汇编语言 &#x2F; Linux &#x2F; gdb &#x2F; 数据结构 的逆向工程大师，在这款全新的代码世界冒险游戏中冒险，发现隐藏在机器码背后的真相…… 本次Lab由两个部分组成：  一个互动式 gdb 教程">
+    <meta name="description" content="Deadline：2023-11-01 23:59:59  一、实验简介 CSAPP 第三章配套实验。 本学期，我们对 csapp 的经典 bomblab 进行了全面升级（除了难度）。你将假扮一位精通 x86汇编语言 &#x2F; Linux &#x2F; gdb &#x2F; 数据结构 的逆向工程大师，在这款全新的代码世界冒险游戏中冒险，发现隐藏在机器码背后的真相…… 本次Lab由两个部分组成：  一个互动式 gdb 教程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BombLab">
 <meta property="og:url" content="https://cjinfdu.github.io/ics/BombLab/index.html">
 <meta property="og:site_name" content="COMP130201.02 计算机系统基础">
-<meta property="og:description" content="Deadline：2023-10-26 23:59:59  一、实验简介 CSAPP 第三章配套实验。 本学期，我们对 csapp 的经典 bomblab 进行了全面升级（除了难度）。你将假扮一位精通 x86汇编语言 &#x2F; Linux &#x2F; gdb &#x2F; 数据结构 的逆向工程大师，在这款全新的代码世界冒险游戏中冒险，发现隐藏在机器码背后的真相…… 本次Lab由两个部分组成：  一个互动式 gdb 教程">
+<meta property="og:description" content="Deadline：2023-11-01 23:59:59  一、实验简介 CSAPP 第三章配套实验。 本学期，我们对 csapp 的经典 bomblab 进行了全面升级（除了难度）。你将假扮一位精通 x86汇编语言 &#x2F; Linux &#x2F; gdb &#x2F; 数据结构 的逆向工程大师，在这款全新的代码世界冒险游戏中冒险，发现隐藏在机器码背后的真相…… 本次Lab由两个部分组成：  一个互动式 gdb 教程">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cjinfdu.github.io/ics/BombLab/cfg.png">
 <meta property="article:published_time" content="2023-10-07T00:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-06T09:48:13.888Z">
+<meta property="article:modified_time" content="2023-10-06T23:53:26.772Z">
 <meta property="article:author" content="FDUICS-2023助教组">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cjinfdu.github.io/ics/BombLab/cfg.png">
@@ -98,7 +98,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">二、实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8A%A8%E5%BC%8F-gdb-%E6%95%99%E7%A8%8B-gdb-tutor"><span class="toc-number">2.1.</span> <span class="toc-text">互动式 gdb 教程 gdb-tutor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%82%B8%E5%BC%B9-bomb"><span class="toc-number">2.2.</span> <span class="toc-text">二进制炸弹 Bomb+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">三、实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8F%90%E4%BA%A4%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">四、提交事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">提交格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">评分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC"><span class="toc-number">5.</span> <span class="toc-text">五、实验指导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">动态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.2.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">5.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%B1%87%E7%BC%96"><span class="toc-number">5.4.</span> <span class="toc-text">阅读汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E9%AA%8C%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.5.</span> <span class="toc-text">其他实验帮助</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8E%E7%AE%A1%E9%81%93"><span class="toc-number">5.5.1.</span> <span class="toc-text">重定向与管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E7%BA%B2%E7%9A%84%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-number">5.5.2.</span> <span class="toc-text">“超纲”的汇编指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">五、参考资料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">二、实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8A%A8%E5%BC%8F-gdb-%E6%95%99%E7%A8%8B-gdb-tutor"><span class="toc-number">2.1.</span> <span class="toc-text">互动式 gdb 教程 gdb-tutor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%82%B8%E5%BC%B9-bomb"><span class="toc-number">2.2.</span> <span class="toc-text">二进制炸弹 Bomb+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">三、实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8F%90%E4%BA%A4%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">四、提交事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">提交格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">评分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC"><span class="toc-number">5.</span> <span class="toc-text">五、实验指导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">动态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.2.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">5.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%B1%87%E7%BC%96"><span class="toc-number">5.4.</span> <span class="toc-text">阅读汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E9%AA%8C%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.5.</span> <span class="toc-text">其他实验帮助</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8E%E7%AE%A1%E9%81%93"><span class="toc-number">5.5.1.</span> <span class="toc-text">重定向与管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E7%BA%B2%E7%9A%84%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-number">5.5.2.</span> <span class="toc-text">“超纲”的汇编指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99-%E6%8E%A8%E8%8D%90%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">五、参考资料 &amp; 推荐资料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -133,7 +133,7 @@
 
   <div class="content" itemprop="articleBody">
     <blockquote>
-<p>Deadline：2023-10-26 23:59:59</p>
+<p>Deadline：2023-11-01 23:59:59</p>
 </blockquote>
 <h2 id="一实验简介">一、实验简介</h2>
 <p>CSAPP 第三章配套实验。</p>
@@ -145,6 +145,7 @@
 </ul>
 <p>你的目标是拆除炸弹，无伤通过Bomb+的所有关卡。</p>
 <h2 id="二实验内容">二、实验内容</h2>
+<p>下载链接：<a href="bomblab-handout.tar">bomblab-handout</a></p>
 <h3 id="互动式-gdb-教程-gdb-tutor">互动式 gdb 教程 gdb-tutor</h3>
 <blockquote>
 <p>本部分不占分，也不要求必须完成。</p>
@@ -155,7 +156,7 @@
 <h3 id="二进制炸弹-bomb">二进制炸弹 Bomb+</h3>
 <p>这是一个包含若干关卡的可执行文件。只有你输入满足条件的关卡口令时，才能通过该关卡，到达下一个关卡。如果口令错误，炸弹就会爆炸！（程序会打印爆炸信息并立刻退出）</p>
 <p>你的目标是找到所有关卡的正确口令，让炸弹成功解除。炸弹制造者不小心给出了 <code>main.cpp</code> ，其中包含了Bomb+的主要流程，你可以参考这个源文件了解炸弹的大致逻辑。</p>
-<p>如果炸弹爆炸，它将会输出 <code>BOOM!!!</code>，否则通过每一关后炸弹都会恭喜你；在通关后，它将会输出 <code>Cool! your skill on Reverse Engineer is great.</code>；而通关真结局后，它将会输出 <code>You are really a Master of Reverse Engineer!</code>。（详见 <code>main.cpp</code> ）</p>
+<p>如果炸弹爆炸，它将会输出 <code>BOOM!!!</code>，否则通过每一关后炸弹都会恭喜你；在通关后，它将会输出 <code>Cool! your skill on Reverse Engineering is great.</code>；而通关真结局后，它将会输出 <code>You are really a Master of Reverse Engineering!</code>。（详见 <code>main.cpp</code> ）</p>
 <blockquote>
 <p>炸弹会读取 <code>fail.txt</code> 并在爆炸时打印其内容，如果你想要很酷炫的爆炸，可以自行修改 <code>fail.txt</code> 或直接将其删去。</p>
 </blockquote>
@@ -172,8 +173,7 @@
 <p>请注意，Secret的解锁条件在第三关中进行了提示，或许你能在 <code>main.cpp</code> 的某个函数中发现一些违和之处……</p>
 <h2 id="三实验步骤">三、实验步骤</h2>
 <ul>
-<li>完整阅读本实验文档</li>
-<li>下载题目附件，下载链接：<a href="bomblab-handout.zip">BombLab</a></li>
+<li>完整阅读本实验文档、下载题目附件</li>
 <li>跟随 gdb-tutor 学习 gdb 的基础使用方法</li>
 <li>使用静态分析与动态分析方法分析 Bomb+，尽力找出正确的口令</li>
 <li>编写实验报告，在 elearning 上提交压缩包</li>
@@ -264,9 +264,7 @@
 <h3 id="阅读汇编">阅读汇编</h3>
 <p>在拿到汇编代码文件后，我们就需要通过分析它来理解程序的逻辑。如果是一个简短的函数，或许汇编也就几十行；但你很有可能会遇到百来行的函数。如何应对这种复杂的代码？</p>
 <p>我们介绍一种理解汇编代码的方法，叫做 <strong>CFG（Control Flow Graph，控制流图）</strong>。显然，汇编代码中没有 if-else/for loop/while loop 这样的结构，而只有各种jump、conditional jump。很容易想到，我们可以把各种jump指令把它们的目标用一个箭头连起来，来让代码变得稍微好看懂一点。不过，我们还可以做得更加好一些：</p>
-<figure>
-<img src="cfg.png" alt="cfg" /><figcaption>cfg</figcaption>
-</figure>
+<p><img src="cfg.png" /></p>
 <p>这是一个伪代码的例子，我们同样可以将这个方法运用到汇编语言中。构造CFG的基础方法很简单：我们只需要把不含跳转代码当作一个Block，然后把Block们连接起来即可。你可以在草稿纸上使用这个方法，将函数的跳转逻辑理清楚。不要小看了CFG的作用，亲自试试吧，或许你会从此觉得读汇编语言也不过如此。</p>
 <p>另外一种推荐的技巧是……<strong>将汇编代码打印出来</strong>。没错，虽然我知道手写代码一定是痛苦的体验，但在纸上阅读汇编语言代码确实是一种推荐的方法。这是因为，汇编语言的阅读可能需要大量的标注，在纸上标记会方便很多。不过也请注意，Bomb+的汇编代码很长，包含了许多不会执行或与实验无关的函数。你可以只在遇到应付不了的关卡时才选择把看不懂的那些函数打印出来。</p>
 <h3 id="其他实验帮助">其他实验帮助</h3>
@@ -298,13 +296,14 @@
 <p>大家在实验过程中，或许会遇到一些课上没有讲过的汇编指令，我们在这里介绍一下其中一个。</p>
 <p><code>endbr64</code>：一种用于防御ROP（Return Oriented Programming）攻击的机制 —— CET（Control-flow Enforcement）的一部分，但大多的CPU现在还没有实装，因此它们执行到这条指令时会直接略过。本次实验并不涉及相关的内容，你也可以直接略过。<del>如果对二进制漏洞攻防感兴趣，大家也可以关注信息网络安全协会的相关活动。</del></p>
 <p>如果遇到其他没见过的汇编指令，我们建议自己查询互联网。如果你有钻研的精神，欢迎你试着查询Intel的官方手册 <a target="_blank" rel="noopener" href="https://www.intel.cn/content/www/cn/zh/architecture-and-technology/64-ia-32-architectures-software-developer-vol-1-manual.html">英特尔® 64 位和 IA-32 架构开发人员手册</a>，真正理解这个指令的细节。在查询这种奇厚无比的手册时，请一定记得利用好目录以及搜索功能。</p>
-<h2 id="五参考资料">五、参考资料</h2>
+<h2 id="五参考资料-推荐资料">五、参考资料 &amp; 推荐资料</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html" class="uri">http://csapp.cs.cmu.edu/3e/labs.html</a> 原版Lab</li>
-<li>本实验参考22年的实验开发，感谢lrx学长支持</li>
+<li><p>本实验参考22年的实验开发，感谢lrx学长支持</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://bbs.kanxue.com/homepage-category-835440-293.htm">从汇编角度学习C/C++ - 看雪</a></p></li>
 </ul>
-<p><br></p>
-<p><image src="meme.jpg" style="width: 160px; height: 160px;"></p>
+<p><br><br></p>
+<p><image src="meme.jpg" style="width: 320px; height: 320px;display: flex; justify-content: center; align-items: center;"></p>
 
   </div>
 </article>
@@ -329,7 +328,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">二、实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8A%A8%E5%BC%8F-gdb-%E6%95%99%E7%A8%8B-gdb-tutor"><span class="toc-number">2.1.</span> <span class="toc-text">互动式 gdb 教程 gdb-tutor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%82%B8%E5%BC%B9-bomb"><span class="toc-number">2.2.</span> <span class="toc-text">二进制炸弹 Bomb+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">三、实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8F%90%E4%BA%A4%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">四、提交事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">提交格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">评分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC"><span class="toc-number">5.</span> <span class="toc-text">五、实验指导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">动态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.2.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">5.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%B1%87%E7%BC%96"><span class="toc-number">5.4.</span> <span class="toc-text">阅读汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E9%AA%8C%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.5.</span> <span class="toc-text">其他实验帮助</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8E%E7%AE%A1%E9%81%93"><span class="toc-number">5.5.1.</span> <span class="toc-text">重定向与管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E7%BA%B2%E7%9A%84%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-number">5.5.2.</span> <span class="toc-text">“超纲”的汇编指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">五、参考资料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">二、实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8A%A8%E5%BC%8F-gdb-%E6%95%99%E7%A8%8B-gdb-tutor"><span class="toc-number">2.1.</span> <span class="toc-text">互动式 gdb 教程 gdb-tutor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%82%B8%E5%BC%B9-bomb"><span class="toc-number">2.2.</span> <span class="toc-text">二进制炸弹 Bomb+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">三、实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8F%90%E4%BA%A4%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">四、提交事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">提交格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">评分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC"><span class="toc-number">5.</span> <span class="toc-text">五、实验指导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">动态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.2.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">5.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%B1%87%E7%BC%96"><span class="toc-number">5.4.</span> <span class="toc-text">阅读汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E9%AA%8C%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.5.</span> <span class="toc-text">其他实验帮助</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8E%E7%AE%A1%E9%81%93"><span class="toc-number">5.5.1.</span> <span class="toc-text">重定向与管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E7%BA%B2%E7%9A%84%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-number">5.5.2.</span> <span class="toc-text">“超纲”的汇编指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99-%E6%8E%A8%E8%8D%90%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">五、参考资料 &amp; 推荐资料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

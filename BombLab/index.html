@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Deadline：2023-10-26 23:59:59  一、实验简介 CSAPP 第三章配套实验。 本学期，我们对 csapp 的经典 bomblab 进行了全面升级（除了难度）。你将假扮一位精通 x86汇编语言 &#x2F; Linux &#x2F; gdb &#x2F; 数据结构 的逆向工程大师，在这款全新的代码世界冒险游戏中冒险，发现隐藏在机器码背后的真相…… 本次Lab由两个部分组成：  一个互动式 gdb 教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BombLab">
+<meta property="og:url" content="https://cjinfdu.github.io/ics/BombLab/index.html">
+<meta property="og:site_name" content="COMP130201.02 计算机系统基础">
+<meta property="og:description" content="Deadline：2023-10-26 23:59:59  一、实验简介 CSAPP 第三章配套实验。 本学期，我们对 csapp 的经典 bomblab 进行了全面升级（除了难度）。你将假扮一位精通 x86汇编语言 &#x2F; Linux &#x2F; gdb &#x2F; 数据结构 的逆向工程大师，在这款全新的代码世界冒险游戏中冒险，发现隐藏在机器码背后的真相…… 本次Lab由两个部分组成：  一个互动式 gdb 教程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cjinfdu.github.io/ics/BombLab/cfg.png">
+<meta property="article:published_time" content="2023-10-07T00:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-06T09:48:13.888Z">
+<meta property="article:author" content="FDUICS-2023助教组">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cjinfdu.github.io/ics/BombLab/cfg.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/ics/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/ics/images/android-chrome-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/ics/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>BombLab</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/ics/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/ics/Assignment1/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/BombLab/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/BombLab/&text=BombLab"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/BombLab/&is_video=false&description=BombLab"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=BombLab&body=Check out this article: https://cjinfdu.github.io/ics/BombLab/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/BombLab/&name=BombLab&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">二、实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8A%A8%E5%BC%8F-gdb-%E6%95%99%E7%A8%8B-gdb-tutor"><span class="toc-number">2.1.</span> <span class="toc-text">互动式 gdb 教程 gdb-tutor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%82%B8%E5%BC%B9-bomb"><span class="toc-number">2.2.</span> <span class="toc-text">二进制炸弹 Bomb+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">三、实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8F%90%E4%BA%A4%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">四、提交事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">提交格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">评分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC"><span class="toc-number">5.</span> <span class="toc-text">五、实验指导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">动态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.2.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">5.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%B1%87%E7%BC%96"><span class="toc-number">5.4.</span> <span class="toc-text">阅读汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E9%AA%8C%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.5.</span> <span class="toc-text">其他实验帮助</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8E%E7%AE%A1%E9%81%93"><span class="toc-number">5.5.1.</span> <span class="toc-text">重定向与管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E7%BA%B2%E7%9A%84%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-number">5.5.2.</span> <span class="toc-text">“超纲”的汇编指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">五、参考资料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        BombLab
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">COMP130201.02 计算机系统基础</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-10-07T00:00:00.000Z" itemprop="datePublished">2023-10-07</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Deadline：2023-10-26 23:59:59</p>
+</blockquote>
+<h2 id="一实验简介">一、实验简介</h2>
+<p>CSAPP 第三章配套实验。</p>
+<p>本学期，我们对 csapp 的经典 bomblab 进行了全面升级（除了难度）。你将假扮一位精通 x86汇编语言 / Linux / gdb / 数据结构 的逆向工程大师，在这款全新的代码世界冒险游戏中冒险，发现隐藏在机器码背后的真相……</p>
+<p>本次Lab由两个部分组成：</p>
+<ul>
+<li>一个互动式 gdb 教程：gdb-tutor</li>
+<li>一个包含若干个关卡的二进制炸弹：Bomb+</li>
+</ul>
+<p>你的目标是拆除炸弹，无伤通过Bomb+的所有关卡。</p>
+<h2 id="二实验内容">二、实验内容</h2>
+<h3 id="互动式-gdb-教程-gdb-tutor">互动式 gdb 教程 gdb-tutor</h3>
+<blockquote>
+<p>本部分不占分，也不要求必须完成。</p>
+</blockquote>
+<p>在挑战 BombLab 时，gdb是一个非常有用的工具，但以往的 BombLab 只会列出一些常用的 gdb 指令，并不会教大家如何使用。</p>
+<p>为了降低本 Lab 的上手难度，帮助大家掌握 gdb，认识这一强大的工具，我们编写了这个互动式的 gdb 教程。</p>
+<p>使用方法：直接执行 <code>./gdb-tutor</code>，教程源码见 <code>gdb-tutor.c</code>。</p>
+<h3 id="二进制炸弹-bomb">二进制炸弹 Bomb+</h3>
+<p>这是一个包含若干关卡的可执行文件。只有你输入满足条件的关卡口令时，才能通过该关卡，到达下一个关卡。如果口令错误，炸弹就会爆炸！（程序会打印爆炸信息并立刻退出）</p>
+<p>你的目标是找到所有关卡的正确口令，让炸弹成功解除。炸弹制造者不小心给出了 <code>main.cpp</code> ，其中包含了Bomb+的主要流程，你可以参考这个源文件了解炸弹的大致逻辑。</p>
+<p>如果炸弹爆炸，它将会输出 <code>BOOM!!!</code>，否则通过每一关后炸弹都会恭喜你；在通关后，它将会输出 <code>Cool! your skill on Reverse Engineer is great.</code>；而通关真结局后，它将会输出 <code>You are really a Master of Reverse Engineer!</code>。（详见 <code>main.cpp</code> ）</p>
+<blockquote>
+<p>炸弹会读取 <code>fail.txt</code> 并在爆炸时打印其内容，如果你想要很酷炫的爆炸，可以自行修改 <code>fail.txt</code> 或直接将其删去。</p>
+</blockquote>
+<p>实验各个关卡涉及的知识大致如下：</p>
+<ol type="1">
+<li>函数调用</li>
+<li>循环</li>
+<li>分支</li>
+<li>递归</li>
+<li>面向对象</li>
+<li>循环队列</li>
+</ol>
+<p>Secret. ████</p>
+<p>请注意，Secret的解锁条件在第三关中进行了提示，或许你能在 <code>main.cpp</code> 的某个函数中发现一些违和之处……</p>
+<h2 id="三实验步骤">三、实验步骤</h2>
+<ul>
+<li>完整阅读本实验文档</li>
+<li>下载题目附件，下载链接：<a href="bomblab-handout.zip">BombLab</a></li>
+<li>跟随 gdb-tutor 学习 gdb 的基础使用方法</li>
+<li>使用静态分析与动态分析方法分析 Bomb+，尽力找出正确的口令</li>
+<li>编写实验报告，在 elearning 上提交压缩包</li>
+</ul>
+<h2 id="四提交事项">四、提交事项</h2>
+<h3 id="提交格式">提交格式</h3>
+<ol type="1">
+<li>新建文件夹，以你的学号命名（例如 <code>22307130001</code>）。</li>
+<li>将实验报告 <code>report.pdf</code> 以及正确口令 <code>password.txt</code> 放入这个文件夹。注意，<code>password.txt</code> 需要满足可以用重定向秒杀 Bomb+ 的要求（我们会在后面介绍什么是重定向），我们会用这个来判断你通过了几关。</li>
+<li>在上级文件夹使用 <code>tar -cf &lt;ID&gt;.tar &lt;ID&gt;</code> 将文件夹压缩成 tar 包，你会得到一个名为 <code>&lt;ID&gt;.tar</code> 的文件。（请把 <code>&lt;ID&gt;</code> 替换为你的学号）</li>
+</ol>
+<p>你的实验报告应包含以下内容：</p>
+<ol type="1">
+<li>姓名和学号</li>
+<li>每个关卡的推演过程（重点），如你推测的函数的功能</li>
+<li>拆弹成功的截图（随便弄下）</li>
+<li>如果有，请列出引用的内容以及参考的资料</li>
+<li>意见+建议（可选）</li>
+</ol>
+<blockquote>
+<p><strong>助教の温馨提示</strong></p>
+<p>实验报告是用来判断你是否 <strong>独立思考</strong> 来解决本次Lab的。</p>
+<p>我们不希望看到冗长或表意混乱的报告，请一定不要把报告写成论文QaQ</p>
+</blockquote>
+<h3 id="评分">评分</h3>
+<table>
+<thead>
+<tr class="header">
+<th>项目</th>
+<th>分值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>提交格式正确</td>
+<td>5%</td>
+</tr>
+<tr class="even">
+<td>通过正常关卡 6*13%</td>
+<td>78%</td>
+</tr>
+<tr class="odd">
+<td>通过隐藏关卡</td>
+<td>7%</td>
+</tr>
+<tr class="even">
+<td>实验报告</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<p>另：抄袭倒扣分！！勿谓言之不预。</p>
+<blockquote>
+<p><strong>反卷斗士の承诺</strong></p>
+<p>实验过程非抄袭、提交格式正确且通过所有关卡的同学，实验报告部分赋满分。</p>
+</blockquote>
+<h2 id="五实验指导">五、实验指导</h2>
+<p>本题本质上是一道<strong>逆向工程</strong>题，需要你在没有源代码的情况下复原程序编写者的意图与程序的逻辑。你可能会好奇，我们为什么要学习逆向工程、学习汇编：作为科班CS学生，你需要知道自己写出来的程序到底会变成什么样子，到底如何运行，这样你才能知道如何写出更好的程序——正是这些底层的细节将科班程序员和培训班程序员区分开来。这个Lab将会帮助你搞清楚机器码 / 汇编语言具体而言如何运作。</p>
+<p>除此以外，这个Lab还会带你入门逆向工程。逆向工程作为信息安全的一个研究领域，有着许多有趣的应用领域——注册机、软件破解、游戏安全（如修改器、外挂）……除了这些看起来很恶意的应用场景以外，逆向工程一个非常重要的作用就是帮助白帽黑客们找到程序的漏洞，发掘程序的安全问题。不过，最纯粹的逆向工程热爱者，往往是出于自己的好奇心来逆向闭源的软件——这玩意到底怎么实现的？</p>
+<p>如果你对逆向工程感兴趣，可以试着从<strong>CTF（Capture The Flag）</strong>竞赛开始。逆向工程是CTF竞赛的一个主要领域，比赛中出题人会用各种语言、工具编写赛题，试图隐藏程序的逻辑。参赛者需要使用各种工具、结合各种资料来还原程序逻辑。在比赛与练习中，你会接触到各种软件开发技术（如python、rust、golang、android……）、各种编码和密码学算法（如Base64、TEA、RC4……），了解其底层的实现原理。我们学校也有相应的社团/CTF战队——信息网络安全协会/六星战队，大家可以了解一下哦~</p>
+<p>在逆向工程中，分析方法可以大致归类为两类：动态分析与静态分析。简单来说，动态分析就是运行程序、观察其行为；静态分析就是借助可执行文件中的信息与数据（如机器码）还原程序逻辑。在本节中，我们会分别介绍动态分析、静态分析的方法与工具，然后再介绍一些别的小工具。</p>
+<h3 id="动态分析">动态分析</h3>
+<p>最简单的动态分析就是直接运行程序。你可以试试引爆炸弹先。</p>
+<p>正经的动态分析就是使用 <code>gdb</code>（全称为 GNU Debugger）等调试工具进行动态调试。动态调试的坏处是可能会一不小心让程序“跑飞了”，错过你想要观察的代码；而好处就是你可以直观地看到程序运行时，各种数据的实际值。</p>
+<p>至于如何使用，请参考 <code>gdb-tutor</code>。</p>
+<p>你可以去网上找一个 gdb cheetsheet（小抄），方便你查找想用的指令。我们也给出一个挺好的英文教程：<a target="_blank" rel="noopener" href="https://users.umiacs.umd.edu/~tdumitra/courses/ENEE757/Fall15/misc/gdb_tutorial.html">Tudor‘s gdb crash course</a></p>
+<h3 id="静态分析">静态分析</h3>
+<h3 id="反汇编">反汇编</h3>
+<p>我们回顾一下C程序的编译过程：源代码 -&gt; 汇编代码 -&gt; 机器码，中间两步分别称为<strong>编译</strong>与<strong>汇编</strong>。</p>
+<p>在源代码到汇编代码的过程中，编译器作了许多的优化、也删去了很多源代码中的信息，比如局部变量名等等……而汇编代码和机器码则是几乎等价的，汇编语言是机器码的助记符。</p>
+<p>因此，有工具能帮我们将可执行文件中的机器码转化为汇编代码也就不足为奇了，这种工具被称为<strong>反汇编器</strong>。至于汇编代码到源代码，这种工具也存在，但由于本次实验旨在帮助大家熟悉汇编代码，因此在本次实验中我们不会介绍它们。我们这里介绍一个非常经典且常用的反汇编器——objdump。</p>
+<p>我们在命令行中输入 <code>objdump -d ./bomb &gt; bomb.S</code> 就可以获得反汇编文件 <code>bomb.S</code>。</p>
+<p><code>objdump --help</code> 会打印出 objdump 的所有用法，并且会给出精简的解释。</p>
+<blockquote>
+<p><strong>助教の温馨提示</strong></p>
+<p>你可以尝试在<code>objdump</code>后加上 <code>-D</code> 和/或 <code>-x</code> 和/或 <code>-C</code>，就像上面出现的<code>-d</code>一样。你可以通过搜索或读文档的方式了解这会导致什么后果；TA相信这几个参数会对你的实验有很大帮助！</p>
+</blockquote>
+<blockquote>
+<p><strong>X86 / AMD64 汇编语言的格式</strong></p>
+<p>在CSAPP课本上，有一个拓展框介绍了两种汇编语言的格式——AT&amp;T 以及 Intel。</p>
+<p>他们最显著的区别有两个（当然还有别的区别，见课本）：</p>
+<ul>
+<li>两者的源操作数和目的操作数顺序相反</li>
+<li>AT&amp;T 中寄存器需要加上 <code>%</code> 前缀，而 Intel 语法则不用。</li>
+</ul>
+<p>本课程上课教学时使用的语法是 AT&amp;T，这也是 objdump 默认使用的语法。但我们同样推荐你试试 Intel 语法，因为这是安全研究人员更常用的一种语法。想让 objdump 输出语法变为 Intel，只需要给 objdump 添加参数 <code>-M intel</code>。</p>
+</blockquote>
+<h3 id="阅读汇编">阅读汇编</h3>
+<p>在拿到汇编代码文件后，我们就需要通过分析它来理解程序的逻辑。如果是一个简短的函数，或许汇编也就几十行；但你很有可能会遇到百来行的函数。如何应对这种复杂的代码？</p>
+<p>我们介绍一种理解汇编代码的方法，叫做 <strong>CFG（Control Flow Graph，控制流图）</strong>。显然，汇编代码中没有 if-else/for loop/while loop 这样的结构，而只有各种jump、conditional jump。很容易想到，我们可以把各种jump指令把它们的目标用一个箭头连起来，来让代码变得稍微好看懂一点。不过，我们还可以做得更加好一些：</p>
+<figure>
+<img src="cfg.png" alt="cfg" /><figcaption>cfg</figcaption>
+</figure>
+<p>这是一个伪代码的例子，我们同样可以将这个方法运用到汇编语言中。构造CFG的基础方法很简单：我们只需要把不含跳转代码当作一个Block，然后把Block们连接起来即可。你可以在草稿纸上使用这个方法，将函数的跳转逻辑理清楚。不要小看了CFG的作用，亲自试试吧，或许你会从此觉得读汇编语言也不过如此。</p>
+<p>另外一种推荐的技巧是……<strong>将汇编代码打印出来</strong>。没错，虽然我知道手写代码一定是痛苦的体验，但在纸上阅读汇编语言代码确实是一种推荐的方法。这是因为，汇编语言的阅读可能需要大量的标注，在纸上标记会方便很多。不过也请注意，Bomb+的汇编代码很长，包含了许多不会执行或与实验无关的函数。你可以只在遇到应付不了的关卡时才选择把看不懂的那些函数打印出来。</p>
+<h3 id="其他实验帮助">其他实验帮助</h3>
+<h4 id="重定向与管道">重定向与管道</h4>
+<p>上过C语言和C++的大家应该知道，命令行程序有三个默认打开的“流”，分别是stdin，stdout以及stderr。在我们运行命令行程序时，标准输入就是我们敲进去的东西，而程序打印东西到stdout或者stderr，其实就是打印到命令行上。</p>
+<p>在学习C或C++的文件操作的时候，会发现一个很巧的事情——文件读写用到的API，和标准输入输出用的那些API其实都差不多，这是因为文件和标准输入输出本来就是一样的。在Linux系统中，<strong>一切皆文件</strong>。不仅传统意义上的文本文件、多媒体文件等普通文件是文件，套接字（网络接口）、键盘鼠标设备等等都是文件，可以用统一的一套文件API进行处理。</p>
+<p>这种设计不仅带来了极大的统一性，也带来了极大的便捷性。本节介绍的iostream重定向和pipes管道就与这种设计有关。</p>
+<p>既然stdin和stdout也是<strong>文件流</strong>，那么我们当然可以把他们<strong>重定向</strong>到一个普通文件！我们让一个文件被定向到一个程序的标准输入，或者让一个程序的标准输出定向到一个文件当中。前者我们使用 <code>&lt; file</code>，后者我们使用 <code>&gt; file</code>，如下所示：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> hello &gt; hello.txt		<span class="comment"># 把stdout重定向到hello.txt中</span></span><br><span class="line">$ <span class="built_in">cat</span> hello.txt</span><br><span class="line">hello</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cat</span> &lt; hello.txt				<span class="comment"># 把hello.txt重定向到cat的标准输入</span></span><br><span class="line">hello</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cat</span> &lt; hello.txt &gt; hello2.txt	<span class="comment"># 同时重定向cat的标准输入和标准输出</span></span><br><span class="line">$ <span class="built_in">cat</span> hello2.txt</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<p>如果你找到了所有的正确口令，那么把它们写到一个文本文件 <code>password.txt</code> 中，那么使用 <code>./bomb &lt; password.txt</code> 就可以直接通过所有的关卡。</p>
+<p>除此以外，还有更加便利的 <strong>管道</strong> 操作，可以帮助我们将两个程序的输入和输出相连接，也就是构造一条虚拟的管道。这种神奇的操作是通过 <code>|</code> 来完成的：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> 1.txt           	<span class="comment"># 假设我们有这么一个文件</span></span><br><span class="line">GODEL</span><br><span class="line">ESCHER</span><br><span class="line">BACH</span><br><span class="line">$ <span class="built_in">cat</span> 1.txt | <span class="built_in">tail</span> -n1	<span class="comment"># 打印1.txt的最后一行</span></span><br><span class="line">BACH</span><br><span class="line">$ <span class="built_in">cat</span> 1.txt | grep CH 	<span class="comment"># 寻找1.txt中带有CH的行</span></span><br><span class="line">ESCHER</span><br><span class="line">BACH</span><br></pre></td></tr></table></figure>
+<p>利用这两种操作，我们可以方便地处理BombLab的输入。我们知道 <code>cat</code> 是打开文件，也知道标准输入同样也是一个文件，因此我们可以用 <code>cat</code> 打开标准输入文件，这时候 <code>cat</code> 就相当于一个 <code>echo</code>，可以复读我们说的话：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> -</span><br><span class="line">Hello, world!</span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
+<p>除此以外，cat还可以打开多个文件，如下所示：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> 1.txt</span><br><span class="line">hello</span><br><span class="line">$ <span class="built_in">cat</span> 2.txt</span><br><span class="line">world</span><br><span class="line">$ <span class="built_in">cat</span> 1.txt 2.txt</span><br><span class="line">hello</span><br><span class="line">world</span><br></pre></td></tr></table></figure>
+<p>如果你在做BombLab时，已经找到了前面某些阶段的口令，不想在后续步骤中再一遍遍重新输入它们的话，就可以将已知的口令写入一个文本文件中，然后用 <code>cat</code> 打开那个文本文件以及标准输入，然后利用管道机制将这两个文件的内容导向bomb+的输入：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> password.txt - | ./bomb</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>助教の温馨提示</strong></p>
+<p>使用这种操作时注意，由于Bomb+每一阶段都会重新读取一行，所以文件结尾多出的换行符会导致Bomb+下一阶段读到一个寂寞，从而导致炸弹爆炸。因此，在存放口令的文本文件中，注意不要多加一个空白的结尾行。</p>
+</blockquote>
+<blockquote>
+<p><strong>文件拓展名</strong></p>
+<p>熟悉Windows的各位同学一定对诸如 <code>.exe</code> <code>.docx</code> <code>.xls</code> <code>.png</code> <code>.jpeg</code> 等拓展名见惯不惯了，Windows系统会通过文件名中的这些后缀来判断如何打开这个程序。</p>
+<p>不过在使用 Linux 时，通常不需要你为文件加上拓展名，这是因为 Linux 系统往往通过文件头中的魔数来区分文件类型。（这个概念我们在DataLab讲义中简单介绍过，如果你不知道的话可以自己去百度/谷歌看看）因此，我们在这里为文本文件标上 <code>.txt</code> 后缀类似于注释一样，是为了让大家看得更清楚一些。</p>
+</blockquote>
+<h4 id="超纲的汇编指令">“超纲”的汇编指令</h4>
+<p>大家在实验过程中，或许会遇到一些课上没有讲过的汇编指令，我们在这里介绍一下其中一个。</p>
+<p><code>endbr64</code>：一种用于防御ROP（Return Oriented Programming）攻击的机制 —— CET（Control-flow Enforcement）的一部分，但大多的CPU现在还没有实装，因此它们执行到这条指令时会直接略过。本次实验并不涉及相关的内容，你也可以直接略过。<del>如果对二进制漏洞攻防感兴趣，大家也可以关注信息网络安全协会的相关活动。</del></p>
+<p>如果遇到其他没见过的汇编指令，我们建议自己查询互联网。如果你有钻研的精神，欢迎你试着查询Intel的官方手册 <a target="_blank" rel="noopener" href="https://www.intel.cn/content/www/cn/zh/architecture-and-technology/64-ia-32-architectures-software-developer-vol-1-manual.html">英特尔® 64 位和 IA-32 架构开发人员手册</a>，真正理解这个指令的细节。在查询这种奇厚无比的手册时，请一定记得利用好目录以及搜索功能。</p>
+<h2 id="五参考资料">五、参考资料</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html" class="uri">http://csapp.cs.cmu.edu/3e/labs.html</a> 原版Lab</li>
+<li>本实验参考22年的实验开发，感谢lrx学长支持</li>
+</ul>
+<p><br></p>
+<p><image src="meme.jpg" style="width: 160px; height: 160px;"></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">二、实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8A%A8%E5%BC%8F-gdb-%E6%95%99%E7%A8%8B-gdb-tutor"><span class="toc-number">2.1.</span> <span class="toc-text">互动式 gdb 教程 gdb-tutor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%82%B8%E5%BC%B9-bomb"><span class="toc-number">2.2.</span> <span class="toc-text">二进制炸弹 Bomb+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">三、实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%8F%90%E4%BA%A4%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">四、提交事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.1.</span> <span class="toc-text">提交格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">评分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%AE%9E%E9%AA%8C%E6%8C%87%E5%AF%BC"><span class="toc-number">5.</span> <span class="toc-text">五、实验指导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.1.</span> <span class="toc-text">动态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">5.2.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96"><span class="toc-number">5.3.</span> <span class="toc-text">反汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%B1%87%E7%BC%96"><span class="toc-number">5.4.</span> <span class="toc-text">阅读汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E9%AA%8C%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.5.</span> <span class="toc-text">其他实验帮助</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8E%E7%AE%A1%E9%81%93"><span class="toc-number">5.5.1.</span> <span class="toc-text">重定向与管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E7%BA%B2%E7%9A%84%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-number">5.5.2.</span> <span class="toc-text">“超纲”的汇编指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">五、参考资料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/BombLab/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/BombLab/&text=BombLab"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/BombLab/&is_video=false&description=BombLab"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=BombLab&body=Check out this article: https://cjinfdu.github.io/ics/BombLab/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/BombLab/&title=BombLab"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/BombLab/&name=BombLab&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 FDUICS-2023助教组
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/ics/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/ics/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/ics/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/ics/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/ics/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/ics/js/main.js"></script>
+
+
+
+
+

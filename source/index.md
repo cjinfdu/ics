@@ -3,15 +3,18 @@ title: ICS 2023
 ---
 
 Fall, 2023
-Instructor: [金城](https://cjinfdu.github.io/)
-School of Computer Science, Fudan University
 
+Instructor: [金城](https://cjinfdu.github.io/)
+
+School of Computer Science, Fudan University
 
 ---
 
 
 ## News
 
+- **[Oct 12, 2023]** [Lab1-DataLab writeup](datalab-comment) is released.
+- **[Oct 07, 2023]** [Lab2-BombLab](BombLab) is released. 
 - **[Sep 14, 2023]** [Lab1-DataLab](DataLab) is released. 
 - **[Sep 08, 2023]** [ICS实验入门手册](ICS实验入门手册) is released.
 - **[Sep 07, 2023]** Course Website is online.
@@ -25,7 +28,11 @@ School of Computer Science, Fudan University
 |03 |09/15/2023|数的表示 II            |                                                    |
 |04 |09/21/2023|DataLab答疑            |                                                    |
 |05 |09/22/2023|机器码 I               |                                                    |
-|06 |09/28/2023|第二章习题讲解         |                                                    |
+|06 |09/28/2023|第二章习题讲解         |[第二章习题讲义](Assignment1)                       |
+|07 |10/07/2023|BombLab发布            |[Lab2-BombLab](BombLab) (Due: 11/01/2023)           |
+|08 |10/08/2023|机器码 II              |                                                    |
+|09 |10/12/2023|DataLab讲解            |[Lab1-DataLab writeup](datalab-comment)             |
+|10 |10/13/2023|机器码 III             |                                                    |
 
 ---
 
@@ -33,7 +40,12 @@ School of Computer Science, Fudan University
 #include <stdio.h>
 int main()
 {
-  unsigned version = 0x44fce000; // play --> https://www.h-schmidt.net/FloatConverter/IEEE754.html
-  printf("Hello, ICS %f!\n", *(float*)&version);
+  unsigned version;
+	__asm__("movl %%eax, 2023\n\t"
+		:"=r"(version)        /* output */
+		:"%eax"         /* clobbered register */
+		);
+
+  printf("Hello, ICS %d!\n", version);
 }
 ```

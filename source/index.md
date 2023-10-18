@@ -33,6 +33,14 @@ School of Computer Science, Fudan University
 |08 |10/08/2023|机器码 II              |                                                    |
 |09 |10/12/2023|DataLab讲解            |[Lab1-DataLab writeup](datalab-comment)             |
 |10 |10/13/2023|机器码 III             |                                                    |
+|11 |10/19/2023|BombLab答疑            |                                                    |
+|12 |10/20/2023|                       |                                                    |
+|13 |10/26/2023|KierayLab发布          |                                                    |
+|14 |10/27/2023|                       |                                                    |
+|15 |11/02/2023|BombLab讲解 & 第三章习题讲解  |                                                    |
+|16 |11/03/2023|                       |                                                    |
+|17 |11/09/2023|CacheLab发布 & 第四章习题讲解 |                                                    |
+|18 |11/10/2023|                       |                                                    |
 
 ---
 

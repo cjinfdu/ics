@@ -457,7 +457,7 @@ public:
 
 在本部分实验中，我们需要你熟悉C++ 20中协程的使用方法，并自己动手实现一个`generator`。
 
-**任务四（10分）** 阅读[连接](https://lewissbaker.github.io/2017/09/25/coroutine-theory)中的这几篇文章，结合网上的资料，回答以下问题：
+**任务四（10分）** 阅读[链接](https://lewissbaker.github.io/)中的这几篇文章，结合网上的资料，回答以下问题：
 
 1. 协程函数的返回值`Coroutine Functor`需要有哪些成员？
 2. `Promise`对象需要提供哪些函数？

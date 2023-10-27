@@ -200,6 +200,7 @@ int main() {
 完成了`libco_v1/coro.h`中的内容后，你需要在`libco_v1/coro.cpp`中实现协程的创建（`create`）、释放（`release`）、恢复（`resume`）、暂停（`yield`）这四个函数。
 
 `create`函数用于创建一个协程，并返回该协程的指针。
+
 > hint：如果你在`coroutine`的构造函数中完成了部分资源的初始化，那么在`create`函数中，你只需要使用`new`来创建一个`coroutine`对象即可。
 > 
 > 你可能会感到疑惑，为什么这里不需要设置上述提到的`coroutine`上下文中的相关内容。对此，我们采用`lazy`的策略，即只有在协程被激活时，才会设置其上下文。
@@ -273,7 +274,7 @@ int main() {
 
 所谓共享栈，就是所有协程在运行时，使用一个较大的栈，当协程暂停时，只将其使用到的栈空间进行保存（也就是申请一片刚刚好的空间，然后`memcpy`），当协程恢复时，再将其使用到的栈空间进行恢复（也就是将之前`memcpy`的内容再copy回来）。
 
-我们使用`coroutine_attr`结构体在创建时指定协程的属性，其中`stack_size`表示需要为协程分配的栈大小，`sstack`表示是否使用共享栈。如果使用共享栈，那么`stack_size`指向一个`share_stack`结构体，否则为`nullptr`。
+我们使用`coroutine_attr`结构体在创建时指定协程的属性，其中`stack_size`表示需要为协程分配的栈大小，`sstack`表示是否使用共享栈。如果使用共享栈，那么`sstack`指向一个`share_stack`结构体，否则为`nullptr`。
 
 > 这里可能会出现`stack_size`与`sstack`所指的`share_stack`不一致的情况，这种情况下，你需要将协程的`stack_size`设置为`sstack`的大小。
 

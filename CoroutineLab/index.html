@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Deadline：2023-11-15 23:59:59  Warning：本次实验难度较高，可能需要花费较长时间。 Warning：本次实验难度较高，实验的分数与投入并非成正比，请合理安排时间。 Warning：本次实验难度较高，请理性看待，不必过度追求完美。 Warning：本次实验难度较高，但也不要忘记学术诚信（什么事情能做，什么不能）  看到上述警告，或许你会有一些担忧。但请放心，我们的">
+    <meta name="description" content="Deadline：2023-11-22 23:59:59  Warning：本次实验难度较高，可能需要花费较长时间。 Warning：本次实验难度较高，实验的分数与投入并非成正比，请合理安排时间。 Warning：本次实验难度较高，请理性看待，不必过度追求完美。 Warning：本次实验难度较高，但也不要忘记学术诚信（什么事情能做，什么不能）  看到上述警告，或许你会有一些担忧。但请放心，我们的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coroutine lab">
 <meta property="og:url" content="https://cjinfdu.github.io/ics/CoroutineLab/index.html">
 <meta property="og:site_name" content="COMP130201.02 计算机系统基础">
-<meta property="og:description" content="Deadline：2023-11-15 23:59:59  Warning：本次实验难度较高，可能需要花费较长时间。 Warning：本次实验难度较高，实验的分数与投入并非成正比，请合理安排时间。 Warning：本次实验难度较高，请理性看待，不必过度追求完美。 Warning：本次实验难度较高，但也不要忘记学术诚信（什么事情能做，什么不能）  看到上述警告，或许你会有一些担忧。但请放心，我们的">
+<meta property="og:description" content="Deadline：2023-11-22 23:59:59  Warning：本次实验难度较高，可能需要花费较长时间。 Warning：本次实验难度较高，实验的分数与投入并非成正比，请合理安排时间。 Warning：本次实验难度较高，请理性看待，不必过度追求完美。 Warning：本次实验难度较高，但也不要忘记学术诚信（什么事情能做，什么不能）  看到上述警告，或许你会有一些担忧。但请放心，我们的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-26T00:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-26T02:16:39.666Z">
+<meta property="article:modified_time" content="2023-10-30T12:40:05.065Z">
 <meta property="article:author" content="FDUICS-2023助教组">
 <meta name="twitter:card" content="summary">
     
@@ -131,7 +131,7 @@
 
   <div class="content" itemprop="articleBody">
     <blockquote>
-<p>Deadline：2023-11-15 23:59:59</p>
+<p>Deadline：2023-11-22 23:59:59</p>
 </blockquote>
 <p><strong>Warning</strong>：本次实验难度较高，可能需要花费较长时间。</p>
 <p><strong>Warning</strong>：本次实验难度较高，实验的分数与投入并非成正比，请合理安排时间。</p>
@@ -233,7 +233,11 @@
 <p>这便是<code>libco_v1/coro.h</code>中需要完善的内容。如果有不清楚的地方，及时向助教提问！！！</p>
 </blockquote>
 <p>完成了<code>libco_v1/coro.h</code>中的内容后，你需要在<code>libco_v1/coro.cpp</code>中实现协程的创建（<code>create</code>）、释放（<code>release</code>）、恢复（<code>resume</code>）、暂停（<code>yield</code>）这四个函数。</p>
-<p><code>create</code>函数用于创建一个协程，并返回该协程的指针。 &gt; hint：如果你在<code>coroutine</code>的构造函数中完成了部分资源的初始化，那么在<code>create</code>函数中，你只需要使用<code>new</code>来创建一个<code>coroutine</code>对象即可。 &gt; &gt; 你可能会感到疑惑，为什么这里不需要设置上述提到的<code>coroutine</code>上下文中的相关内容。对此，我们采用<code>lazy</code>的策略，即只有在协程被激活时，才会设置其上下文。</p>
+<p><code>create</code>函数用于创建一个协程，并返回该协程的指针。</p>
+<blockquote>
+<p>hint：如果你在<code>coroutine</code>的构造函数中完成了部分资源的初始化，那么在<code>create</code>函数中，你只需要使用<code>new</code>来创建一个<code>coroutine</code>对象即可。</p>
+<p>你可能会感到疑惑，为什么这里不需要设置上述提到的<code>coroutine</code>上下文中的相关内容。对此，我们采用<code>lazy</code>的策略，即只有在协程被激活时，才会设置其上下文。</p>
+</blockquote>
 <p><code>release</code>函数用于释放一个协程的资源。</p>
 <blockquote>
 <p>如果你在<code>create</code>函数中使用了<code>new</code>，那么在<code>release</code>函数中，你需要使用<code>delete</code>来释放协程的资源。</p>
@@ -283,7 +287,7 @@
 <p>注意：当<code>count</code>不为1时，你需要维护一种<code>stack_mem</code>的使用方式，以减少拷贝带来的开销。</p>
 </blockquote>
 <p>所谓共享栈，就是所有协程在运行时，使用一个较大的栈，当协程暂停时，只将其使用到的栈空间进行保存（也就是申请一片刚刚好的空间，然后<code>memcpy</code>），当协程恢复时，再将其使用到的栈空间进行恢复（也就是将之前<code>memcpy</code>的内容再copy回来）。</p>
-<p>我们使用<code>coroutine_attr</code>结构体在创建时指定协程的属性，其中<code>stack_size</code>表示需要为协程分配的栈大小，<code>sstack</code>表示是否使用共享栈。如果使用共享栈，那么<code>stack_size</code>指向一个<code>share_stack</code>结构体，否则为<code>nullptr</code>。</p>
+<p>我们使用<code>coroutine_attr</code>结构体在创建时指定协程的属性，其中<code>stack_size</code>表示需要为协程分配的栈大小，<code>sstack</code>表示是否使用共享栈。如果使用共享栈，那么<code>sstack</code>指向一个<code>share_stack</code>结构体，否则为<code>nullptr</code>。</p>
 <blockquote>
 <p>这里可能会出现<code>stack_size</code>与<code>sstack</code>所指的<code>share_stack</code>不一致的情况，这种情况下，你需要将协程的<code>stack_size</code>设置为<code>sstack</code>的大小。</p>
 </blockquote>

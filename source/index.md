@@ -13,6 +13,7 @@ School of Computer Science, Fudan University
 
 ## News
 
+- **[Nov 02, 2023]** [Lab2-BombLab writeup](BombLab-Comment) is released.
 - **[Oct 26, 2023]** [Lab3-CoroutineLab](CoroutineLab) is released. 
 - **[Oct 12, 2023]** [Lab1-DataLab writeup](datalab-comment) is released.
 - **[Oct 07, 2023]** [Lab2-BombLab](BombLab) is released. 
@@ -38,9 +39,10 @@ School of Computer Science, Fudan University
 | 12   | 10/20/2023 | 机器码 IV                     |                                                     |
 | 13   | 10/26/2023 | CoroutineLab发布              | [Lab3-CoroutineLab](CoroutineLab) (Due: 11/22/2023) |
 | 14   | 10/27/2023 | 处理器 I                      |                                                     |
-| 15   | 11/02/2023 | BombLab讲解 & 第三章习题讲解  |                                                     |
+| 15   | 11/02/2023 | BombLab讲解                   | [Lab2-BombLab writeup](BombLab-Comment)             |
 | 16   | 11/03/2023 | 处理器 II                     |                                                     |
-| 17   | 11/09/2023 | CacheLab发布 & 第四章习题讲解 |                                                     |
+| 17   | 11/09/2023 | CacheLab发布                  |                                                     |
+|      |            | 第三、四章习题讲解            | [第三章习题讲义](Assignment2)                       |
 | 18   | 11/10/2023 |                               |                                                     |
 
 ---

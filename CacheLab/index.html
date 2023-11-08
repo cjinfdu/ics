@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="deadline 2023.11.29  实验简介 前言 CSAPP第6章配套实验。 本实验的目的是加深同学们对高速缓存cache认识。实验分为三个部分：  part A：用c语言设计一个cache模拟器，它能读入特定格式的trace文件（trace文件中模拟了一系列的对存储器的读写操作），并且输出cache的命中、缺失、替换次数；我们会为你提供一部分代码 part B：根据特定的cache参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CacheLab">
+<meta property="og:url" content="https://cjinfdu.github.io/ics/CacheLab/index.html">
+<meta property="og:site_name" content="COMP130201.02 计算机系统基础">
+<meta property="og:description" content="deadline 2023.11.29  实验简介 前言 CSAPP第6章配套实验。 本实验的目的是加深同学们对高速缓存cache认识。实验分为三个部分：  part A：用c语言设计一个cache模拟器，它能读入特定格式的trace文件（trace文件中模拟了一系列的对存储器的读写操作），并且输出cache的命中、缺失、替换次数；我们会为你提供一部分代码 part B：根据特定的cache参数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-08T14:19:08.000Z">
+<meta property="article:modified_time" content="2023-11-08T15:32:05.912Z">
+<meta property="article:author" content="FDUICS-2023助教组">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/ics/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/ics/images/android-chrome-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/ics/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>CacheLab</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/ics/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/ics/Assignment2/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/CacheLab/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/CacheLab/&text=CacheLab"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/CacheLab/&is_video=false&description=CacheLab"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CacheLab&body=Check out this article: https://cjinfdu.github.io/ics/CacheLab/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/CacheLab/&name=CacheLab&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">实验简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%80%BC%E5%88%86%E9%85%8D"><span class="toc-number">1.2.</span> <span class="toc-text">分值分配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">部署实验环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.1.</span> <span class="toc-text">（1）下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.2.</span> <span class="toc-text">（2）准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-gcc"><span class="toc-number">2.2.1.</span> <span class="toc-text">确保已安装了 gcc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-make"><span class="toc-number">2.2.2.</span> <span class="toc-text">确保已安装了 make</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%AE%89%E8%A3%85python"><span class="toc-number">2.2.3.</span> <span class="toc-text">确保安装python</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85valgrind"><span class="toc-number">2.2.4.</span> <span class="toc-text">安装valgrind</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#part-a"><span class="toc-number">3.</span> <span class="toc-text">part A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#intro"><span class="toc-number">3.1.</span> <span class="toc-text">intro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#to-do"><span class="toc-number">3.2.</span> <span class="toc-text">to-do</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requirements"><span class="toc-number">3.3.</span> <span class="toc-text">requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#evaluation"><span class="toc-number">3.4.</span> <span class="toc-text">evaluation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hints"><span class="toc-number">3.5.</span> <span class="toc-text">hints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#part-b"><span class="toc-number">4.</span> <span class="toc-text">part B</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#intro-1"><span class="toc-number">4.1.</span> <span class="toc-text">intro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#to-do-1"><span class="toc-number">4.2.</span> <span class="toc-text">to-do</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requirements-1"><span class="toc-number">4.3.</span> <span class="toc-text">requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#evaluation-1"><span class="toc-number">4.4.</span> <span class="toc-text">evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#step-0"><span class="toc-number">4.4.1.</span> <span class="toc-text">step 0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-1"><span class="toc-number">4.4.2.</span> <span class="toc-text">step 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-2"><span class="toc-number">4.4.3.</span> <span class="toc-text">step 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hints-1"><span class="toc-number">4.5.</span> <span class="toc-text">hints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#part-c---honor-part"><span class="toc-number">5.</span> <span class="toc-text">part C --honor part</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">6.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-1"><span class="toc-number">7.</span> <span class="toc-text">2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#intro-2"><span class="toc-number">7.1.</span> <span class="toc-text">intro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#to-do-2"><span class="toc-number">7.2.</span> <span class="toc-text">to-do</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requirements-2"><span class="toc-number">7.3.</span> <span class="toc-text">requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#evaluation-2"><span class="toc-number">7.4.</span> <span class="toc-text">evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#step-0-1"><span class="toc-number">7.4.1.</span> <span class="toc-text">step 0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-1-1"><span class="toc-number">7.4.2.</span> <span class="toc-text">step 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-2-1"><span class="toc-number">7.4.3.</span> <span class="toc-text">step 2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">8.</span> <span class="toc-text">评分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E5%AE%9E%E9%AA%8C"><span class="toc-number">9.</span> <span class="toc-text">提交实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E8%A6%81%E6%B1%82"><span class="toc-number">9.1.</span> <span class="toc-text">（1）内容要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82"><span class="toc-number">9.2.</span> <span class="toc-text">（2）格式要求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number"></span> <span class="toc-text">参考资料</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        CacheLab
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">COMP130201.02 计算机系统基础</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-11-08T14:19:08.000Z" itemprop="datePublished">2023-11-08</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>deadline 2023.11.29</p>
+</blockquote>
+<h2 id="实验简介">实验简介</h2>
+<h3 id="前言">前言</h3>
+<p>CSAPP第6章配套实验。<br />
+本实验的目的是加深同学们对高速缓存cache认识。实验分为三个部分：</p>
+<ul>
+<li>part A：用c语言设计一个cache模拟器，它能读入特定格式的trace文件（trace文件中模拟了一系列的对存储器的读写操作），并且输出cache的命中、缺失、替换次数；我们会为你提供一部分代码</li>
+<li>part B：根据特定的cache参数设计一个矩阵转置的算法，使得矩阵转置运算中cache的miss次数尽可能低。</li>
+<li>part C（honor part）：分为两部分
+<ul>
+<li>继续优化part B的矩阵转置算法</li>
+<li>同part B，不过设计一个矩阵乘法的算法</li>
+</ul></li>
+</ul>
+<p>本次实验参考CMU CSAPP课程的<a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">Cache Lab</a>。<br />
+考虑到pj将至，助教将本次lab的难度相较于原版调低了一些（除了honor-part，但honor-part的分数很少），而且本次实验全程用c语言（可以不用和抽象的汇编打交道了），所以大家不用过于担心~~~</p>
+<h3 id="分值分配">分值分配</h3>
+<ul>
+<li>part A: <code>40%</code></li>
+<li>part B: <code>36%</code></li>
+<li>part C (honor part): <code>9%</code></li>
+<li>实验报告+代码风格：<code>15%</code></li>
+</ul>
+<h2 id="部署实验环境">部署实验环境</h2>
+<h3 id="下载">（1）下载</h3>
+<p>下载链接：<a href="cachelab-handout.tar">cachelab-handout</a></p>
+<p>这是一个 <code>tar</code> 文件，需要对其解包。</p>
+<p>（ubuntu 虚拟机 or WSL）打开终端，进入到上述文件对应的目录下，然后执行如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf cachelab-handout.tar</span><br></pre></td></tr></table></figure>
+<p>会在当前目录解包出一个 <code>cachelab-handout</code> 文件夹，其中的内容就是本次实验用到的的文件了。</p>
+<h3 id="准备工作">（2）准备工作</h3>
+<h4 id="确保已安装了-gcc">确保已安装了 gcc</h4>
+<p>在终端中检查是否安装了 gcc： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -v</span><br></pre></td></tr></table></figure> 如果已安装，终端将会反馈版本信息，否则会反馈 <code>command not found</code> 。<br />
+如未安装，尝试执行以下命令进行安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc</span><br></pre></td></tr></table></figure>
+<h4 id="确保已安装了-make">确保已安装了 make</h4>
+<p>检查是否安装 make，在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -v</span><br></pre></td></tr></table></figure>
+<p>同理，如未安装，尝试以此执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install make</span><br><span class="line">sudo apt-get install libc6 libc6-dev libc6-dev-i386</span><br></pre></td></tr></table></figure>
+<h4 id="确保安装python">确保安装python</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
+<p>一般情况下系统是自带python的<br />
+如未安装，请自行上网搜索安装教程</p>
+<h4 id="安装valgrind">安装valgrind</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install valgrind</span><br></pre></td></tr></table></figure>
+<h2 id="part-a">part A</h2>
+<h3 id="intro">intro</h3>
+<p>设计一个cache模拟器，读入指定格式的trace文件，模拟cache的运行过程，然后输出cache的命中、缺失、替换次数<br />
+trace文件是通过<code>valgrind</code>的<a target="_blank" rel="noopener" href="https://valgrind.org/docs/manual/lk-manual.html">lackey</a>工具生成的，它具有以下格式 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">I 0400d7d4,8</span><br><span class="line"> M 0421c7f0,4</span><br><span class="line"> L 04f6b868,8</span><br><span class="line"> S 7ff0005c8,8</span><br></pre></td></tr></table></figure> 每行格式为 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[space]operation address,size</span><br></pre></td></tr></table></figure> 其中<code>I</code>代表读指令操作，<code>L</code>代表读数据操作，<code>S</code>代表写数据操作，<code>M</code>代表修改数据操作（即读数据后写数据）。<strong>除了<code>I</code>操作外，其他操作都会在开头都会有一个空格</strong>。<code>address</code>为操作的地址，<code>size</code>为操作的大小（单位为字节）。</p>
+<h3 id="to-do">to-do</h3>
+<p>你的所有实现都在<code>csim.c</code>和<code>csim.h</code>中</p>
+<p>你的全局变量和函数需要定义在<code>csim.h</code>中，你的函数实现需要在<code>csim.c</code>中</p>
+<p>我们提供了一个<code>csim-ref</code>的文件，是一个参考实现，你可以通过它来检查你的实现是否正确，它的用法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./csim-ref [-hv] -s &lt;s&gt; -E &lt;E&gt; -b &lt;b&gt; -t &lt;tracefile&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-h</code>代表帮助</li>
+<li><code>-v</code>代表verbose，即输出详细信息</li>
+<li><code>-s</code>代表cache的set数</li>
+<li><code>-E</code>代表每个set中的cache line数</li>
+<li><code>-b</code>代表cache line的大小（单位为字节）</li>
+<li><code>-t</code>代表trace文件的路径</li>
+</ul>
+<p><code>csim-ref</code>会输出cache的命中、缺失、替换次数，比如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./csim-ref -s 16 -E 1 -b 16 -t traces/yi.trace</span></span><br><span class="line">hits:4 misses:5 evictions:3</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">verbose模式：</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">./csim-ref -v -s 16 -E 1 -b 16 -t traces/yi.trace</span></span><br><span class="line">L 10,1 miss</span><br><span class="line">M 20,1 miss hit</span><br><span class="line">L 22,1 hit</span><br><span class="line">S 18,1 hit</span><br><span class="line">L 110,1 miss eviction</span><br><span class="line">L 210,1 miss eviction</span><br><span class="line">M 12,1 miss eviction hit</span><br><span class="line">hits:4 misses:5 evictions:3</span><br></pre></td></tr></table></figure>
+<p>你的实现需要具有和<code>csim-ref</code>相同的功能，包括verbose模式输出debug信息</p>
+<p>在<code>csim.c</code>中，我们已经为你提供了基本的解析命令行参数的代码，你需要在此基础上进行实现</p>
+<p>cache的替换策略为<code>LRU</code>算法</p>
+<h3 id="requirements">requirements</h3>
+<ul>
+<li>你的代码在编译时不能存在warning</li>
+<li>你 <strong>只能</strong> 使用c语言来实现（助教看不懂c++和python）</li>
+<li>虽然给了测试数据，但不允许面向数据编程，助教会做源码检查；不允许通过直接调用<code>csim-ref</code>来实现</li>
+</ul>
+<h3 id="evaluation">evaluation</h3>
+<p>共有8项测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./csim -s 1 -E 1 -b 1 -t traces/yi2.trace</span><br><span class="line">./csim -s 4 -E 2 -b 4 -t traces/yi.trace</span><br><span class="line">./csim -s 2 -E 1 -b 4 -t traces/dave.trace</span><br><span class="line">./csim -s 2 -E 1 -b 3 -t traces/trans.trace</span><br><span class="line">./csim -s 2 -E 2 -b 3 -t traces/trans.trace</span><br><span class="line">./csim -s 2 -E 4 -b 3 -t traces/trans.trace</span><br><span class="line">./csim -s 5 -E 1 -b 5 -t traces/trans.trace</span><br><span class="line">./csim -s 5 -E 1 -b 5 -t traces/long.trace</span><br></pre></td></tr></table></figure>
+<p>原始分为：前7项每项<code>3</code>分，最后一项<code>6</code>分，共<code>27</code>分；对于每一项，<code>hit, miss, eviction</code>的正确性各占<code>1/3</code>的分数</p>
+<p>原始分将会被乘以<code>40/27</code>得到最终的分数</p>
+<p>最终的分数可以通过<code>./driver.py</code>来查看</p>
+<h3 id="hints">hints</h3>
+<ul>
+<li>使用<code>malloc</code>和<code>free</code>来构造cache</li>
+<li>你可以使用<code>csim-ref</code>来检查你的实现是否正确，通过开启verbose模式可以更好地debug</li>
+<li><code>LRU</code>算法可以简单地使用计数器的实现方式</li>
+<li>对于具体如何实现没有太多要求，大家八仙过海各显神通~~~</li>
+</ul>
+<h2 id="part-b">part B</h2>
+<h3 id="intro-1">intro</h3>
+<p>cache为何被称为“高速缓存”，是因为读取cache的速率远快于读取主存的速率（可能大概100倍），因此cache miss的次数往往决定了程序的运行速度。因此，我们需要尽可能设计cache-friendly的程序，使得cache miss的次数尽可能少。</p>
+<p>在这部分的实验，你将对矩阵转置程序（一个非常容易cache miss的程序）进行优化，让cache miss的次数尽可能少。你的分数将由cache miss的次数决定</p>
+<h3 id="to-do-1">to-do</h3>
+<p>你的所有实现都将在<code>trans.c</code>中</p>
+<p>你将设计这样的一个函数：它接收四个参数：M，N，一个N * M的矩阵A和一个M * N的矩阵B，你需要把A转置后的结果存入B中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> trans_desc[] = <span class="string">&quot;some description&quot;</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">trans</span><span class="params">(<span class="type">int</span> M, <span class="type">int</span> N, <span class="type">int</span> A[N][M], <span class="type">int</span> B[M][N])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// your implementation here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每设计好一个这样的函数，你都可以在<code>registerFunctions()</code>中为其进行“注册”，只有“注册”了的函数才会被加入之后的评测中，你可以“注册”并评测多个函数；为上面的函数进行注册只需要将下面代码加入<code>registerFunctions()</code>中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">registerTransFunction(trans, trans_desc);</span><br></pre></td></tr></table></figure>
+<p>我们提供了一个名为<code>trans()</code>的函数作为示例</p>
+<p>你需要保证有一个且有唯一一个“注册”的函数用于最终提交，我们将靠“注册”时的description进行区分，请确保你的提交函数的description是“Transpose submission” ，比如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> transpose_submit_desc[] = <span class="string">&quot;Transpose submission&quot;</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">transpose_submit</span><span class="params">(<span class="type">int</span> M, <span class="type">int</span> N, <span class="type">int</span> A[N][M], <span class="type">int</span> B[M][N])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// your implementation here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们将使用特定形状的矩阵和特定参数的cache来进行评测，所以你 <strong>可以</strong> 针对这些特殊情况来编写代码</p>
+<h3 id="requirements-1">requirements</h3>
+<ul>
+<li>你的代码在编译时不能存在warning</li>
+<li>在每个矩阵转置函数中，你至多能定义12个int类型的局部变量（不包括循环变量，但你不能将循环变量用作其他用途），且不能使用任何全局变量。你不能定义除int以外类型的变量。你不能使用malloc等方式申请内存块。你可以使用int数组，但等同于数组大小的数量的int类型变量也同样被计入</li>
+<li>你不能使用递归</li>
+<li>你只允许使用一个函数完成矩阵转置的功能，而不能在函数中调用任何辅助函数</li>
+<li>你不能修改原始的矩阵A，但是你可以任意修改矩阵B</li>
+<li>你可以定义宏</li>
+</ul>
+<h3 id="evaluation-1">evaluation</h3>
+<p>我们将使用cache参数为：<code>s = 48, E = 1, b = 48</code>，即每个cache line大小为48字节，共有48个cache line，每个set中只有1个cache line。<br />
+我们将使用以下3种矩阵来进行评测 - 48 * 48的矩阵，分值<code>12</code>分，miss次数<code>&lt; 500</code>则满分，miss次数<code>&gt; 800</code>则0分，<code>500~800</code>将按miss次数获取一定比例的分数 - 96 * 96的矩阵，分值<code>12</code>分，miss次数<code>&lt; 2200</code>则满分，miss次数<code>&gt; 3000</code>则0分，<code>2200~3000</code>将按miss次数获取一定比例的分数 - 93 * 99的矩阵，分值<code>12</code>分，miss次数<code>&lt; 3000</code>则满分，miss次数<code>&gt; 4000</code>则0分，<code>3000~4000</code>将按miss次数获取一定比例的分数 - 荣誉分<code>4</code>分，将在荣誉部分介绍</p>
+<p>我们只会针对这三种矩阵进行测试，所以你 <strong>可以</strong> 只考虑这三种情况</p>
+<h4 id="step-0">step 0</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp;&amp; make</span><br></pre></td></tr></table></figure>
+<h4 id="step-1">step 1</h4>
+<p>在测试之前，进行算法正确性的测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./tracegen -M &lt;row&gt; -N &lt;col&gt;</span><br></pre></td></tr></table></figure>
+<p>比如对48 * 48转置函数进行测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./tracegen -M 48 -N 48</span><br></pre></td></tr></table></figure>
+<p>你也可以对特定的函数进行测试，比如对第0个“注册”的函数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./tracegen -M 48 -N 48 -F 0</span><br></pre></td></tr></table></figure>
+<h4 id="step-2">step 2</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./test-trans -M &lt;row&gt; -N &lt;col&gt;</span><br></pre></td></tr></table></figure>
+<p>这个程序将使用valgrind工具生成trace文件，然后调用csim-ref程序获取cache命中、缺失、替换的次数</p>
+<h3 id="hints-1">hints</h3>
+<ul>
+<li>在调用<code>./test-trans</code>之后，可以使用如下命令查看你的cache命中/缺失情况；你可以把<code>f0</code>替换为<code>fi</code>来查看第 i 个“注册”的函数带来的cache命中/缺失情况</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./csim-ref -v -s 48 -E 1 -b 48 -t trace.f0 &gt; result.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/public/waside/waside-blocking.pdf">这篇文章可能对你有所启发</a></li>
+<li>cache的关联度为1，你可能需要考虑冲突带来的miss</li>
+<li>脑测一下你的miss次数或许是一个很好的选择，你可以计算一下大概有多少比例的miss，然后乘以总的读写次数；你可以在上面生成的<code>result.txt</code>文件中验证你的想法</li>
+<li>你可以认为A和B矩阵的起始地址位于某个cacheline的开始（即A和B二维数组的起始地址能被48整除）</li>
+</ul>
+<h2 id="part-c---honor-part">part C --honor part</h2>
+<blockquote>
+<p>warning: 本部分较难，可能花费比较多的时间，但是分值较低，请自行平衡付出时间的收益</p>
+</blockquote>
+<h2 id="section">1</h2>
+<ul>
+<li>（<code>2</code>分）在part B中，将48 * 48的矩阵转置情况的cache miss次数优化到<code>450</code>次以下</li>
+<li>（<code>2</code>分）在part B中，将96 * 96的矩阵转置情况的cache miss次数优化到<code>1900</code>次以下</li>
+</ul>
+<h2 id="section-1">2</h2>
+<h3 id="intro-2">intro</h3>
+<p>同part B，但是需要实现一个矩阵乘法算法<br />
+cache参数：<code>s = 32, E = 1, b = 32</code><br />
+评测矩阵：A：32 * 32；B：32 * 32</p>
+<h3 id="to-do-2">to-do</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd honor-part</span><br></pre></td></tr></table></figure>
+<p>你的所有实现都将在<code>mul.c</code>中</p>
+<p>实现以下函数，将A * B的结果存入C中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> mul_desc[] = <span class="string">&quot;some description&quot;</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">mul</span><span class="params">(<span class="type">int</span> M, <span class="type">int</span> N, <span class="type">int</span> A[N][M], <span class="type">int</span> B[M][N], <span class="type">int</span> C[N][N])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// your implementation here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并在<code>registerFunctions()</code>“注册”，步骤同part B</p>
+<h3 id="requirements-2">requirements</h3>
+<p>同part B，但是你可以定义至多16个int类型的局部变量（不包括循环变量，但你不能将循环变量用作其他用途）；你不能修改原始的矩阵A和B，但是你可以任意修改矩阵C</p>
+<h3 id="evaluation-2">evaluation</h3>
+<p>你将获得附加分<code>5</code>分当你的cache miss次数<code>&lt; 4000</code></p>
+<h4 id="step-0-1">step 0</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp;&amp; make</span><br></pre></td></tr></table></figure>
+<h4 id="step-1-1">step 1</h4>
+<p>在测试之前，进行算法正确性的测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./tracegen -M 32 -N 32</span><br></pre></td></tr></table></figure>
+<h4 id="step-2-1">step 2</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./test-mul -M 32 -N 32</span><br></pre></td></tr></table></figure>
+<h2 id="评分">评分</h2>
+<p>在项目根目录下 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./driver.py</span><br></pre></td></tr></table></figure> 注意请保证在项目根目录和<code>./honor-part</code>目录下都已经<code>make</code>过了</p>
+<h2 id="提交实验">提交实验</h2>
+<h3 id="内容要求">（1）内容要求</h3>
+<p>你需要提交：</p>
+<ul>
+<li>csim.c</li>
+<li>csim.h</li>
+<li>trans.c</li>
+<li>mul.c（如果完成了的话）</li>
+<li>一份实验报告</li>
+</ul>
+<p>实验报告应该包含以下内容：</p>
+<ul>
+<li>实验标题，你的姓名，学号。</li>
+<li>你在终端中执行<code>./driver.py</code>后的截图。</li>
+<li>描述你每个部分实现的思路，要求简洁清晰。</li>
+<li>如果有，请务必在报告中列出引用的内容以及参考的资料。</li>
+<li>对本实验的感受（可选）。</li>
+<li>对助教们的建议（可选）。</li>
+</ul>
+<h3 id="格式要求">（2）格式要求</h3>
+<p>可提交<code>.md</code>文件或者<code>.pdf</code>文件。不要提交<code>.doc</code>或<code>.docx</code>文件。</p>
+<p>将所有代码文件和实验报告打包成<code>tar</code>文件。将其命名为<code>&lt;学号&gt;.tar</code></p>
+<h1 id="参考资料">参考资料</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">原版Cache Lab</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/rangfei/article/details/126845978">C语言处理参数的 getopt() 函数</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">实验简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%80%BC%E5%88%86%E9%85%8D"><span class="toc-number">1.2.</span> <span class="toc-text">分值分配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">部署实验环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.1.</span> <span class="toc-text">（1）下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.2.</span> <span class="toc-text">（2）准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-gcc"><span class="toc-number">2.2.1.</span> <span class="toc-text">确保已安装了 gcc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%B7%B2%E5%AE%89%E8%A3%85%E4%BA%86-make"><span class="toc-number">2.2.2.</span> <span class="toc-text">确保已安装了 make</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AE%E4%BF%9D%E5%AE%89%E8%A3%85python"><span class="toc-number">2.2.3.</span> <span class="toc-text">确保安装python</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85valgrind"><span class="toc-number">2.2.4.</span> <span class="toc-text">安装valgrind</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#part-a"><span class="toc-number">3.</span> <span class="toc-text">part A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#intro"><span class="toc-number">3.1.</span> <span class="toc-text">intro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#to-do"><span class="toc-number">3.2.</span> <span class="toc-text">to-do</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requirements"><span class="toc-number">3.3.</span> <span class="toc-text">requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#evaluation"><span class="toc-number">3.4.</span> <span class="toc-text">evaluation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hints"><span class="toc-number">3.5.</span> <span class="toc-text">hints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#part-b"><span class="toc-number">4.</span> <span class="toc-text">part B</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#intro-1"><span class="toc-number">4.1.</span> <span class="toc-text">intro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#to-do-1"><span class="toc-number">4.2.</span> <span class="toc-text">to-do</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requirements-1"><span class="toc-number">4.3.</span> <span class="toc-text">requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#evaluation-1"><span class="toc-number">4.4.</span> <span class="toc-text">evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#step-0"><span class="toc-number">4.4.1.</span> <span class="toc-text">step 0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-1"><span class="toc-number">4.4.2.</span> <span class="toc-text">step 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-2"><span class="toc-number">4.4.3.</span> <span class="toc-text">step 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hints-1"><span class="toc-number">4.5.</span> <span class="toc-text">hints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#part-c---honor-part"><span class="toc-number">5.</span> <span class="toc-text">part C --honor part</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">6.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-1"><span class="toc-number">7.</span> <span class="toc-text">2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#intro-2"><span class="toc-number">7.1.</span> <span class="toc-text">intro</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#to-do-2"><span class="toc-number">7.2.</span> <span class="toc-text">to-do</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requirements-2"><span class="toc-number">7.3.</span> <span class="toc-text">requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#evaluation-2"><span class="toc-number">7.4.</span> <span class="toc-text">evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#step-0-1"><span class="toc-number">7.4.1.</span> <span class="toc-text">step 0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-1-1"><span class="toc-number">7.4.2.</span> <span class="toc-text">step 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-2-1"><span class="toc-number">7.4.3.</span> <span class="toc-text">step 2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E5%88%86"><span class="toc-number">8.</span> <span class="toc-text">评分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E5%AE%9E%E9%AA%8C"><span class="toc-number">9.</span> <span class="toc-text">提交实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E8%A6%81%E6%B1%82"><span class="toc-number">9.1.</span> <span class="toc-text">（1）内容要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82"><span class="toc-number">9.2.</span> <span class="toc-text">（2）格式要求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number"></span> <span class="toc-text">参考资料</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/CacheLab/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/CacheLab/&text=CacheLab"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/CacheLab/&is_video=false&description=CacheLab"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CacheLab&body=Check out this article: https://cjinfdu.github.io/ics/CacheLab/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/CacheLab/&title=CacheLab"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/CacheLab/&name=CacheLab&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 FDUICS-2023助教组
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/ics/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/ics/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/ics/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/ics/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/ics/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/ics/js/main.js"></script>
+
+
+
+
+

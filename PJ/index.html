@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Deadline：2023-12-20 23:59:59  项目概述 跟据CSAPP中对Y86-64指令集的描述和讲解，以任意技术栈自行实现一个CPU模拟器。 下载链接：PJ-handout.tar 项目要求  项目完成人数1～2人。其中单人完成的同学可以适当降低一些工作量的要求。多人组队的同学需要把参与项目的每个人的工作量和贡献度都写在报告中。 支持CSAPP中Y86-64的基本指令 程序输入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="课程项目 Y86-64模拟器">
+<meta property="og:url" content="https://cjinfdu.github.io/ics/PJ/index.html">
+<meta property="og:site_name" content="COMP130201.02 计算机系统基础">
+<meta property="og:description" content="Deadline：2023-12-20 23:59:59  项目概述 跟据CSAPP中对Y86-64指令集的描述和讲解，以任意技术栈自行实现一个CPU模拟器。 下载链接：PJ-handout.tar 项目要求  项目完成人数1～2人。其中单人完成的同学可以适当降低一些工作量的要求。多人组队的同学需要把参与项目的每个人的工作量和贡献度都写在报告中。 支持CSAPP中Y86-64的基本指令 程序输入">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-21T12:51:11.000Z">
+<meta property="article:modified_time" content="2023-11-21T13:41:43.270Z">
+<meta property="article:author" content="FDUICS-2023助教组">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/ics/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/ics/images/android-chrome-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/ics/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>课程项目 Y86-64模拟器</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/ics/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/ics/MakeLab/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/ics/CacheLab/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/PJ/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/PJ/&text=课程项目 Y86-64模拟器"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/PJ/&is_video=false&description=课程项目 Y86-64模拟器"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=课程项目 Y86-64模拟器&body=Check out this article: https://cjinfdu.github.io/ics/PJ/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/PJ/&name=课程项目 Y86-64模拟器&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">项目概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E8%A6%81%E6%B1%82"><span class="toc-number">2.</span> <span class="toc-text">项目要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%80%BC%E5%88%86%E9%85%8D"><span class="toc-number">3.</span> <span class="toc-text">分值分配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%86%85%E5%AE%B9"><span class="toc-number">4.</span> <span class="toc-text">项目内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%BE%93%E5%85%A5"><span class="toc-number">4.1.</span> <span class="toc-text">模拟器输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%BE%93%E5%87%BA"><span class="toc-number">4.2.</span> <span class="toc-text">模拟器输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%89%8D%E7%AB%AF%E7%95%8C%E9%9D%A2%E5%8F%AF%E9%80%89"><span class="toc-number">4.3.</span> <span class="toc-text">实现前端界面（可选）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8"><span class="toc-number">4.3.1.</span> <span class="toc-text">桌面应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web%E5%BA%94%E7%94%A8"><span class="toc-number">4.3.2.</span> <span class="toc-text">web应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E7%9F%A5%E9%81%93%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%80%E5%A7%8B"><span class="toc-number">5.</span> <span class="toc-text">不知道从哪里开始？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%A1%B9%E7%9B%AE%E4%BA%AE%E7%82%B9"><span class="toc-number">6.</span> <span class="toc-text">什么是项目亮点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA"><span class="toc-number">7.</span> <span class="toc-text">项目展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F"><span class="toc-number">8.</span> <span class="toc-text">提交方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">9.</span> <span class="toc-text">注意事项</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        课程项目 Y86-64模拟器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">COMP130201.02 计算机系统基础</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-11-21T12:51:11.000Z" itemprop="datePublished">2023-11-21</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Deadline：2023-12-20 23:59:59</p>
+</blockquote>
+<h2 id="项目概述">项目概述</h2>
+<p>跟据CSAPP中对Y86-64指令集的描述和讲解，以任意技术栈自行实现一个CPU模拟器。</p>
+<p>下载链接：<a href="PJ-handout.tar">PJ-handout.tar</a></p>
+<h2 id="项目要求">项目要求</h2>
+<ul>
+<li><p>项目完成人数1～2人。其中单人完成的同学可以适当降低一些工作量的要求。多人组队的同学需要把参与项目的每个人的<strong>工作量和贡献度</strong>都写在报告中。</p></li>
+<li><p>支持CSAPP中Y86-64的<strong>基本指令</strong></p></li>
+<li><p><strong>程序输入输出满足基本格式，输出与标准答案一致</strong></p></li>
+<li><p>需要提交项目报告和项目文件</p></li>
+<li><p>对技术栈不做限制，可以自由选择编程语言(python,c++,SystemVerilog等)、操作系统</p></li>
+<li><p>在满足项目要求的条件下，有能力的同学可以做额外的完善，例如更好的架构设计、更丰富的指令、所学知识的综合等，即添加自己的亮点</p></li>
+<li><p>进行课堂汇报（安排在期末前），包括项目设计的亮点等</p></li>
+</ul>
+<h2 id="分值分配">分值分配</h2>
+<ul>
+<li>基础功能(80%)</li>
+<li>项目展示与报告(15%)</li>
+<li>项目亮点(5%)</li>
+</ul>
+<h2 id="项目内容">项目内容</h2>
+<p>在项目中，你需要设计实际一个cpu模拟器，你的程序将从<code>stdio</code>读取机器码<code>.yo</code>文件，然后在<code>stdout</code>按要求输出初始状态和每条指令执行后的CPU状态的日志。（回想bomblab的重定向） 最后的运行方式类似如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./cpu &lt; example.yo &gt; example.json </span><br><span class="line">或</span><br><span class="line">$ python cpu.py &lt; example.yo &gt; example.yaml</span><br></pre></td></tr></table></figure>
+<h3 id="模拟器输入">模拟器输入</h3>
+<p>请以文件包给出的包含了机器码和汇编码的<code>.yo</code>文件作为模拟器输入，自行编写代码处理 样例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0x00a: 30f23f00000000000000 | irmovq $63, %rdx # src and dst have 63 elements </span><br><span class="line">0x014: 30f69802000000000000 | irmovq dest, %rsi # dst array</span><br><span class="line">0x01e: 30f79000000000000000 | irmovq src, %rdi # src array</span><br></pre></td></tr></table></figure>
+<h3 id="模拟器输出">模拟器输出</h3>
+<ul>
+<li><p>输出一份<code>json</code>格式文件或<code>yaml</code>格式文件，可使用库或自行编写代码</p></li>
+<li><p>要求在每条指令执行完毕后输出完整的寄存器信息和内存非零值(<strong>八字节对齐，按小端法解释为十进制有符号整数</strong>)。内存非零值指{(内存地址,内存值)|内存值<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.486ex;" xmlns="http://www.w3.org/2000/svg" width="5.784ex" height="2.106ex" role="img" focusable="false" viewBox="0 -716 2556.4 931"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2260" d="M166 -215T159 -215T147 -212T141 -204T139 -197Q139 -190 144 -183L306 133H70Q56 140 56 153Q56 168 72 173H327L406 327H72Q56 332 56 347Q56 360 70 367H426Q597 702 602 707Q605 716 618 716Q625 716 630 712T636 703T638 696Q638 692 471 367H707Q722 359 722 347Q722 336 708 328L451 327L371 173H708Q722 163 722 153Q722 140 707 133H351Q175 -210 170 -212Q166 -215 159 -215Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1055.8,0)"><g data-mml-node="mn"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g></g><g data-mml-node="mo" transform="translate(1555.8,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(2000.4,0)"><path data-c="2200" d="M0 673Q0 684 7 689T20 694Q32 694 38 680T82 567L126 451H430L473 566Q483 593 494 622T512 668T519 685Q524 694 538 694Q556 692 556 674Q556 670 426 329T293 -15Q288 -22 278 -22T263 -15Q260 -11 131 328T0 673ZM414 410Q414 411 278 411T142 410L278 55L414 410Z"></path></g></g></g></svg></mjx-container></span>内存地址} ，即所有非零内存值的内存地址-值键值对。</p></li>
+<li><p>所有输出(含内存地址、寄存器值、内存值)均以十进制输出</p></li>
+<li><p>最终完整输出样例如下，无需担心每次log内key-value的排列顺序，但要确保列表内log的顺序与程序执行顺序一致</p>
+<ul>
+<li><p>json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[ </span><br><span class="line">    { </span><br><span class="line">        "PC": 0, </span><br><span class="line">        "REG": { </span><br><span class="line">            "rax": 1, </span><br><span class="line">            "rcx": -2,</span><br><span class="line">            "rdx": 3,</span><br><span class="line">        },</span><br><span class="line">        "CC": { </span><br><span class="line">            "ZF": 0,</span><br><span class="line">            "SF": 0, </span><br><span class="line">            "OF": 0 </span><br><span class="line">        },</span><br><span class="line">        "STAT": 1, </span><br><span class="line">        "MEM": { </span><br><span class="line">            "64": 4294901760, </span><br><span class="line">            "72": 65535, </span><br><span class="line">            ... </span><br><span class="line">        } </span><br><span class="line">    },</span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure></li>
+<li><p>yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- PC: 0 </span><br><span class="line">    REG:</span><br><span class="line">        rax: 1 </span><br><span class="line">        rcx: -2 </span><br><span class="line">        rdx: 3 </span><br><span class="line">        ...</span><br><span class="line">    CC:</span><br><span class="line">        ZF: 0 </span><br><span class="line">        SF: 0 </span><br><span class="line">        OF: 0 </span><br><span class="line">    MEM:</span><br><span class="line">        64: 4294901760 </span><br><span class="line">        72: 65535 </span><br><span class="line">        ... </span><br><span class="line">    STAT: 1 </span><br><span class="line">- ...</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<h3 id="实现前端界面可选">实现前端界面（可选）</h3>
+<p>为了方便期末pre和行CPU运行期间相关信息的展示，同学们可以选择性完成前端界面。<strong>前端页面不要求强制完成，完成不会获得额外分数</strong>，你甚至可以用命令行作为前端页面。前端界面的时间方法非常多，这里不做限制，助教可以推荐几个常用的技术思路:</p>
+<h4 id="桌面应用">桌面应用</h4>
+<p>思路是不输出此时处理器的状态，直接显示到前端</p>
+<ul>
+<li>QT库：一个非常成熟的跨系统GUI库，有C++, Python等语言的API，网上也能找到很多资料</li>
+<li>GTK库：另一个非常成熟且很有开源精神的GUI库，提供了C, JS, Python等语言的API <a target="_blank" rel="noopener" href="https://www.gtk.org/">The GTK Project - A free and open-source cross-platform widget toolkit</a></li>
+<li>Electron：一个用写网页的方法写GUI的库，如果你有web基础，可以考虑用这个<a target="_blank" rel="noopener" href="https://www.electronjs.org/">Electron | Buildcross-platform desktop apps with JavaScript, HTML, and CSS. (electronjs.org)</a></li>
+<li>UWP, SwiftUI，Unity......</li>
+</ul>
+<h4 id="web应用">web应用</h4>
+<p>思路是后端提供API的Web接口，前端读取Web接口的数据显示</p>
+<p>P.S. 你可以直接传上一阶段生成的json数据</p>
+<ul>
+<li>Django&amp;Flask+HTML/JS：非常成熟的Python Web框架，熟练的话半天时间就能把整个PJ写完</li>
+<li>NodeJS+HTML：非常成熟的JS后端，性能据说也不错</li>
+<li>Go/Java/...+HTML</li>
+</ul>
+<h2 id="不知道从哪里开始">不知道从哪里开始？</h2>
+<ul>
+<li>阅读CSAPP，了解Y86-64指令集</li>
+<li>先试着读取文件内容和解析文件内容为一条条对应指令</li>
+<li>画图设计你的每条指令的执行过程，回想课上讲的cpu设计</li>
+<li>先从简单的一条指令开始，逐步增加指令</li>
+<li>在每条指令结束后记得保存寄存器和内存的状态（变量状态）</li>
+</ul>
+<h2 id="什么是项目亮点">什么是项目亮点</h2>
+<p>项目亮点是指你在完成基本功能的基础上，自行添加的功能或者设计，我们可以给出如下几个方向的建议：</p>
+<ul>
+<li><strong>任何你认为你所作的巧妙独特的地方</strong></li>
+<li>更好的cpu架构设计</li>
+<li>更丰富的指令集</li>
+<li>更好的展示效果</li>
+<li>如何结合我们之前学过的实验内容或课程内容来丰富功能</li>
+</ul>
+<blockquote>
+<p>P.S. 前端页面不会算作亮点，因为这并不是主要考察目标，大家可以放心。</p>
+</blockquote>
+<h2 id="项目展示">项目展示</h2>
+<p>项目展示将在课程最后一到两周进行，具体时间待定。希望同学们能尽早完成pj方便课上展示。展示形式为每组5分钟左右的汇报，需要同学准备相应的ppt，汇报内容可以包括但不限于：</p>
+<ul>
+<li>cpu架构设计</li>
+<li>cpu实机运行效果</li>
+<li>项目亮点</li>
+</ul>
+<p>我们的pre的分数<strong>全部</strong>由投票打分得到</p>
+<h2 id="提交方式">提交方式</h2>
+<p>请将项目报告、项目文件打包提交，命名格式为： 姓名_学号_PJ</p>
+<ul>
+<li>项目报告内需包含你的CPU的设计、前端的设计（如果有）、代码运行的方法。在讲清楚的情况下越短越好，以及你的意见+建议（可选）。</li>
+<li>项目文件内需包含你所有的代码和静态文件(如前端的图片，设计文档等)</li>
+<li>请<strong>不要</strong>将.git或者二进制文件附在压缩包里，除非为项目配置编译环境十分复杂。</li>
+</ul>
+<h2 id="注意事项">注意事项</h2>
+<ul>
+<li>本次项目旨在考查同学们对Y86指令集和基本处理器设计思想的掌握程度，满足项目要求即可获得大部分分数，请自行平衡好时间</li>
+<li>禁止抄袭代码，鼓励自行学习相关知识丰富模拟器功能</li>
+<li>小组如果中途发生变动，需要向助教说明情况</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">项目概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E8%A6%81%E6%B1%82"><span class="toc-number">2.</span> <span class="toc-text">项目要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%80%BC%E5%88%86%E9%85%8D"><span class="toc-number">3.</span> <span class="toc-text">分值分配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%86%85%E5%AE%B9"><span class="toc-number">4.</span> <span class="toc-text">项目内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%BE%93%E5%85%A5"><span class="toc-number">4.1.</span> <span class="toc-text">模拟器输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%BE%93%E5%87%BA"><span class="toc-number">4.2.</span> <span class="toc-text">模拟器输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%89%8D%E7%AB%AF%E7%95%8C%E9%9D%A2%E5%8F%AF%E9%80%89"><span class="toc-number">4.3.</span> <span class="toc-text">实现前端界面（可选）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8"><span class="toc-number">4.3.1.</span> <span class="toc-text">桌面应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web%E5%BA%94%E7%94%A8"><span class="toc-number">4.3.2.</span> <span class="toc-text">web应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E7%9F%A5%E9%81%93%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%80%E5%A7%8B"><span class="toc-number">5.</span> <span class="toc-text">不知道从哪里开始？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%A1%B9%E7%9B%AE%E4%BA%AE%E7%82%B9"><span class="toc-number">6.</span> <span class="toc-text">什么是项目亮点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA"><span class="toc-number">7.</span> <span class="toc-text">项目展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F"><span class="toc-number">8.</span> <span class="toc-text">提交方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">9.</span> <span class="toc-text">注意事项</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/PJ/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/PJ/&text=课程项目 Y86-64模拟器"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/PJ/&is_video=false&description=课程项目 Y86-64模拟器"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=课程项目 Y86-64模拟器&body=Check out this article: https://cjinfdu.github.io/ics/PJ/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/PJ/&title=课程项目 Y86-64模拟器"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/PJ/&name=课程项目 Y86-64模拟器&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 FDUICS-2023助教组
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/ics/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/ics/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/ics/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/ics/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/ics/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/ics/js/main.js"></script>
+
+
+
+
+

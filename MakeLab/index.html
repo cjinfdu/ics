@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Deadline: 2023-12-13 23:59:59  实验简介 Fudan ICS 原创课程项目，对应 CSAPP 中的链接单元，旨在通过 Makefile 帮助同学们了解编译与链接的过程。 下载 下载链接：makelab-handout.tar 12345678makelab-handout&#x2F;├── task0   &#x2F;&#x2F; 15%├── task1   &#x2F;&#x2F; 25%├── task2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MakeLab">
+<meta property="og:url" content="https://cjinfdu.github.io/ics/MakeLab/index.html">
+<meta property="og:site_name" content="COMP130201.02 计算机系统基础">
+<meta property="og:description" content="Deadline: 2023-12-13 23:59:59  实验简介 Fudan ICS 原创课程项目，对应 CSAPP 中的链接单元，旨在通过 Makefile 帮助同学们了解编译与链接的过程。 下载 下载链接：makelab-handout.tar 12345678makelab-handout&#x2F;├── task0   &#x2F;&#x2F; 15%├── task1   &#x2F;&#x2F; 25%├── task2">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-23T00:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-21T13:28:15.570Z">
+<meta property="article:author" content="FDUICS-2023助教组">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/ics/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/ics/images/android-chrome-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/ics/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>MakeLab</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/ics/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/ics/PJ/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/MakeLab/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/MakeLab/&text=MakeLab"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/MakeLab/&is_video=false&description=MakeLab"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MakeLab&body=Check out this article: https://cjinfdu.github.io/ics/MakeLab/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/MakeLab/&name=MakeLab&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">实验简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD"><span class="toc-number">1.1.</span> <span class="toc-text">下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C"><span class="toc-number">1.2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">提交</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-make-%E5%92%8C-makefile"><span class="toc-number">2.</span> <span class="toc-text">什么是 make 和 Makefile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-0---warm-up"><span class="toc-number">3.</span> <span class="toc-text">Task 0 - Warm Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86"><span class="toc-number">3.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo15"><span class="toc-number">3.2.</span> <span class="toc-text">TODO（15%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-1---debug"><span class="toc-number">4.</span> <span class="toc-text">Task 1 - DEBUG</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86-1"><span class="toc-number">4.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo20"><span class="toc-number">4.2.</span> <span class="toc-text">TODO（20%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%985"><span class="toc-number">4.3.</span> <span class="toc-text">问题（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-2---static-link-library"><span class="toc-number">5.</span> <span class="toc-text">Task 2 - Static Link Library</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86-2"><span class="toc-number">5.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo20-1"><span class="toc-number">5.2.</span> <span class="toc-text">TODO（20%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%985-1"><span class="toc-number">5.3.</span> <span class="toc-text">问题（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-3---dynamic-link-library"><span class="toc-number">6.</span> <span class="toc-text">Task 3 - Dynamic Link Library</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86-3"><span class="toc-number">6.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo20-2"><span class="toc-number">6.2.</span> <span class="toc-text">TODO（20%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%985-2"><span class="toc-number">6.3.</span> <span class="toc-text">问题（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-4-h---cool-down"><span class="toc-number">7.</span> <span class="toc-text">Task 4 (H) - Cool Down</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#todo3"><span class="toc-number">7.1.</span> <span class="toc-text">TODO（3%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%982"><span class="toc-number">7.2.</span> <span class="toc-text">问题（2%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-5-h---new-world"><span class="toc-number">8.</span> <span class="toc-text">Task 5 (H) - New World</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#todo5"><span class="toc-number">8.1.</span> <span class="toc-text">TODO（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">9.</span> <span class="toc-text">作者</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MakeLab
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">COMP130201.02 计算机系统基础</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-11-23T00:00:00.000Z" itemprop="datePublished">2023-11-23</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Deadline: 2023-12-13 23:59:59</p>
+</blockquote>
+<h2 id="实验简介">实验简介</h2>
+<p><code>Fudan ICS</code> 原创课程项目，对应 <code>CSAPP</code> 中的链接单元，旨在通过 <code>Makefile</code> 帮助同学们了解编译与链接的过程。</p>
+<h3 id="下载">下载</h3>
+<p>下载链接：<a href="makelab-handout.tar">makelab-handout.tar</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">makelab-handout/</span><br><span class="line">├── task0   // 15%</span><br><span class="line">├── task1   // 25%</span><br><span class="line">├── task2   // 25%</span><br><span class="line">├── task3   // 25%</span><br><span class="line">├── task4   // 5%   H</span><br><span class="line">├── task5   // 5%   H</span><br><span class="line">└── testAll.sh</span><br></pre></td></tr></table></figure>
+<h3 id="运行">运行</h3>
+<p>在所有 <code>taskAll</code> 文件夹以外有一个测试脚本，使用它运行测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh test.sh</span><br></pre></td></tr></table></figure>
+<h3 id="提交">提交</h3>
+<p>提交内容：包含 <code>report.pdf</code> 和 <code>makelab-handout</code> 的 <code>&lt;your_ID&gt;.tar</code>（&lt; 3 MB）</p>
+<p>实验报告要求：</p>
+<ol type="1">
+<li>包含<code>sh test.sh</code> 的输出截图</li>
+<li>包含每个 <code>task</code> 的解决方案与附带问题的回答</li>
+<li>内容简洁，条理清晰</li>
+</ol>
+<h2 id="什么是-make-和-makefile">什么是 make 和 Makefile</h2>
+<blockquote>
+<p>make 是一个在软件开发中所使用的工具程序（Utility software），经由读取“makefile”的文件以自动化建构软件。它是一种转化文件形式的工具，转换的目标称为“target”；与此同时，它也检查文件的依赖关系，如果需要的话，它会调用一些外部软件来完成任务。它的依赖关系检查系统非常简单，主要根据依赖文件的修改时间进行判断。大多数情况下，它被用来编译源代码，生成结果代码，然后把结果代码连接起来生成可执行文件或者库文件。它使用叫做“makefile”的文件来确定一个 target 文件的依赖关系，然后把生成这个 target 的相关命令传给 shell 去执行。</p>
+<p>许多现代软件的开发中（如 Microsoft Visual Studio），集成开发环境已经取代 make，但是在 Unix 环境中，仍然有许多工程师采用 make 来协助软件开发。</p>
+<p>（from <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Make">Wikipedia</a>)</p>
+</blockquote>
+<p><code>Makefile</code> 包含了一系列的规则和命令。</p>
+<p>在含有 <code>Makefile</code> 的文件夹内，执行如下命令来使用 <code>Makefile</code> 内部的规则和指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &lt;target&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>&lt;target&gt;</code> 表示在 <code>Makefile</code> 中定义的数个目标之一。</p>
+<p>定义的格式如下：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;target&gt; ...: &lt;prerequisites&gt; ...</span><br><span class="line">    command</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">main: main.cpp</span></span><br><span class="line">    g++ main.cpp -o main</span><br></pre></td></tr></table></figure>
+<p>在上述 <code>Makefile</code> 所在的目录在执行 <code>make main</code> 命令时，由于存在 <code>&lt;prerequisites&gt;</code>，<code>make</code> 程序将先检查 <code>&lt;prerequisites&gt;</code>（<code>main.cpp</code>）是否有更新。</p>
+<p>此外，如果 <code>&lt;prerequisites&gt;</code> 中存在其他 <code>&lt;target&gt;</code>，则递归检查其 <code>&lt;prerequisites&gt;</code> 是否有更新。</p>
+<p>如果所有 <code>&lt;prerequisites&gt;</code> 都没有更新，则本次执行不进行操作，如果 <code>&lt;prerequisites&gt;</code> 中其他 <code>&lt;target&gt;</code>有更新，则先执行有更新的 <code>&lt;target&gt;</code> 下的命令。</p>
+<p>最后，<code>main</code> 下的命令将被执行。</p>
+<p>注意，命令使用缩进与 <code>Makefile</code> 的指令进行区分，带有缩进的行最终是由 <code>shell</code> 来执行的，<code>make</code> 内部执行的指令在 <code>Makefile</code> 中是没有缩进的。</p>
+<p>命令不限于编译命令，任何能够在 <code>shell</code> 中执行的命令都可以执行。</p>
+<p>想要深入了解 <code>Makefile</code> 的同学可以阅读<a target="_blank" rel="noopener" href="https://seisman.github.io/how-to-write-makefile/overview.html">“跟我一起写Makefile”</a>，或自行查阅 <code>Makefile</code> 的官方标准文档。</p>
+<h2 id="task-0---warm-up">Task 0 - Warm Up</h2>
+<h3 id="知识">知识</h3>
+<p>编译 <code>C++</code> 程序一般使用 <code>g++</code> 命令。</p>
+<p>如下的命令能够将 <code>main.cpp</code> 编译为可执行文件 <code>main</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp -o main</span><br></pre></td></tr></table></figure>
+<h3 id="todo15">TODO（15%）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">task0</span><br><span class="line">├── Makefile    // TODO</span><br><span class="line">├── main.cpp    // TODO</span><br><span class="line">├── some.cpp</span><br><span class="line">└── some.h</span><br></pre></td></tr></table></figure>
+<p>修改 <code>main.cpp</code> 中的错误代码，在 <code>Makefile</code> 中编写编译命令，使用如下命令编译并运行程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br><span class="line">make main</span><br><span class="line">./main</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+<h2 id="task-1---debug">Task 1 - DEBUG</h2>
+<h3 id="知识-1">知识</h3>
+<p>在 <code>Makefile</code> 中，使用如下格式可以定义变量：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;var name&gt; = &lt;value&gt;</span><br></pre></td></tr></table></figure>
+<p>所有的变量值都是字符串值，使用 <code>$(&lt;var name&gt;)</code> 可以展开变量值到变量所处位置，示例如下：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo = c</span><br><span class="line"><span class="section">prog.o: prog.<span class="variable">$(foo)</span></span></span><br><span class="line">    g<span class="variable">$(foo)</span><span class="variable">$(foo)</span> -<span class="variable">$(foo)</span> prog.<span class="variable">$(foo)</span></span><br></pre></td></tr></table></figure>
+<p>等价于：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">prog.o: prog.c</span></span><br><span class="line">    gcc -c prog.c</span><br></pre></td></tr></table></figure>
+<p>此外，在 <code>Makefile</code> 中，可以使用如下命令字符串之间相等的条件判断：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifeq (&lt;string 1&gt;,&lt;string 2&gt;)</span><br><span class="line">    [commands]</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    [commands]</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+<p>最后，在 <code>make</code> 运行时，变量可以通过如下格式进行值的指定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &lt;target&gt; &lt;var name&gt;=&lt;value&gt;</span><br></pre></td></tr></table></figure>
+<p>而在 <code>g++</code> 中，使用如下命令相当于在源代码中 <code>#define &lt;var name&gt;</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ &lt;<span class="built_in">source</span>&gt; -D&lt;var name&gt;</span><br></pre></td></tr></table></figure>
+<p>例如，使用如下命令相当于在源代码中 <code>#define DEBUG</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp -DDEBUG</span><br></pre></td></tr></table></figure>
+<h3 id="todo20">TODO（20%）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">task1</span><br><span class="line">├── Makefile    // TODO</span><br><span class="line">├── function0.cpp</span><br><span class="line">├── function0.h</span><br><span class="line">├── function1.cpp</span><br><span class="line">├── function1.h</span><br><span class="line">├── main0.cpp</span><br><span class="line">├── main1.cpp</span><br><span class="line">├── shared.cpp</span><br><span class="line">└── shared.h</span><br></pre></td></tr></table></figure>
+<p>在 <code>Makefile</code> 中，包含了两个编译目标：以 <code>main0.cpp</code> 为入口文件的 <code>main0</code> 和以 <code>main1.cpp</code> 为入口文件的 <code>main1</code>。</p>
+<p>要求 <code>main1</code> 目标能够指定变量 <code>debug</code> 为 <code>True</code> 或者 <code>False</code>，来开启调试开关。</p>
+<p>在 <code>Makefile</code> 中编写编译命令，使用如下命令编译并运行程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br><span class="line">make main0</span><br><span class="line">./main0</span><br><span class="line">make main1</span><br><span class="line">./main1</span><br><span class="line">make clean</span><br><span class="line">make main1 debug=True</span><br><span class="line">./main1</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+<h3 id="问题5">问题（5%）</h3>
+<ol type="1">
+<li><p>为什么两个 <code>function.h</code> 都引用了 <code>shared.h</code> 而没有出问题？本来有可能出什么问题。</p></li>
+<li><p>如果把 <code>shared.h</code> 中注释掉的变量定义取消注释会出什么问题？为什么？</p></li>
+<li><p>通常使用 <code>shared.h</code> 中另外被注释掉的宏命令来规避重复引用的风险，原理是什么？取消这些注释之后上一题的问题解除了吗？不管解没解除背后的原因是什么？</p></li>
+</ol>
+<h2 id="task-2---static-link-library">Task 2 - Static Link Library</h2>
+<h3 id="知识-2">知识</h3>
+<p>有些时候 <code>Makefile</code> 会因为工程的扩大而过于庞大，我们会希望减小单个 <code>Makefile</code> 内指令的数量。</p>
+<p>很自然的，就像写代码一样，我们希望能够将一个 <code>Makefile</code> 拆分成多个。</p>
+<p>很遗憾的是，每一个目录只能有一个 <code>Makefile</code> 文件，所以大多数项目将不同部分的代码分装在不同的目录下，每一个目录指定一个 <code>Makefile</code>，以期将这个目录里的文件例如源代码转换成其他的文件格式例如静态链接库。</p>
+<p>使用如下命令可以在顶层的 <code>Makefile</code> 里启用子目录里的 <code>Makefile</code> ：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;path to folder&gt; &amp;&amp; make &lt;target name&gt;</span><br></pre></td></tr></table></figure>
+<p>使用如下命令将一个或多个编译过的文件打包为静态链接库：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ar -r &lt;lib name&gt; [&lt;filename&gt; ...]</span><br></pre></td></tr></table></figure>
+<p>例如使用如下命令将编译好的 <code>B.o</code> 打包为静态链接库：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ar -r libB.a B.o</span><br></pre></td></tr></table></figure>
+<p>在 <code>Linux</code> 系统中，通常使用 <code>lib&lt;name&gt;.a</code> 来命名静态链接库</p>
+<p>在 <code>gcc/g++</code> 中，可以简单认为静态链接库与源代码的地位一样。</p>
+<p>例如，如下命令就可以把当前目录下的 A 静态链接库和 <code>main.cpp</code> 编译并链接在一起：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ libA.a main.cpp -o main</span><br></pre></td></tr></table></figure>
+<h3 id="todo20-1">TODO（20%）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">task2</span><br><span class="line">├── A</span><br><span class="line">│   ├── A.cpp</span><br><span class="line">│   ├── A.h</span><br><span class="line">│   └── Makefile    // TODO</span><br><span class="line">├── B</span><br><span class="line">│   ├── B.h</span><br><span class="line">│   ├── B.o</span><br><span class="line">│   └── libB.a</span><br><span class="line">├── C</span><br><span class="line">│   ├── C.cpp</span><br><span class="line">│   ├── C.h</span><br><span class="line">│   └── Makefile    // TODO</span><br><span class="line">├── Makefile        // TODO</span><br><span class="line">└── main.cpp</span><br></pre></td></tr></table></figure>
+<p>编写 <code>A/Makefile</code> 和 <code>C/Makefile</code>，编译目标是 <code>A/libA.a</code> 和 <code>C/libC.a</code>。</p>
+<p>编写 <code>Makefile</code>，调用 <code>A/Makefile</code> 和 <code>C/Makefile</code>，使用如下命令编译链接并运行程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br><span class="line">make main</span><br><span class="line">size main</span><br><span class="line">./main</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+<h3 id="问题5-1">问题（5%）</h3>
+<ol type="1">
+<li><p>若有多个静态链接库需要链接，编写命令时需要考虑静态链接库和源文件在命令中的顺序吗？是否需要考虑是由什么决定的？</p></li>
+<li><p><code>size main</code> 命令可以查看可执行文件 A 所占的空间，输出结果的每一项是什么意思？</p></li>
+</ol>
+<h2 id="task-3---dynamic-link-library">Task 3 - Dynamic Link Library</h2>
+<h3 id="知识-3">知识</h3>
+<p>使用如下命令可以将 <code>B.cpp</code> 编译为动态链接库：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -shared -fPIC B.cpp -o libB.so</span><br></pre></td></tr></table></figure>
+<p>在 <code>Linux</code> 系统中，通常使用 <code>lib&lt;name&gt;.so</code> 来命名动态链接库。</p>
+<p>编译时链接动态链接库的语法与静态链接库一样。</p>
+<h3 id="todo20-2">TODO（20%）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">task3</span><br><span class="line">├── A</span><br><span class="line">│   ├── A.cpp</span><br><span class="line">│   ├── A.h</span><br><span class="line">│   └── Makefile    // TODO</span><br><span class="line">├── B</span><br><span class="line">│   ├── B.h</span><br><span class="line">├── C</span><br><span class="line">│   ├── C.cpp</span><br><span class="line">│   ├── C.h</span><br><span class="line">│   └── Makefile    // TODO</span><br><span class="line">├── Makefile        // TODO</span><br><span class="line">├── libB.so</span><br><span class="line">└── main.cpp</span><br></pre></td></tr></table></figure>
+<p>代码同 <code>task2</code>，编写 <code>A/Makefile</code> 和 <code>C/Makefile</code>，编译目标是 <code>libA.so</code> 和 <code>libC.so</code>。</p>
+<p>编写 <code>Makefile</code>，调用 <code>A/Makefile</code> 和 <code>C/Makefile</code>，使用如下命令编译链接并运行程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br><span class="line">make main</span><br><span class="line">size main</span><br><span class="line">./main</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+<h3 id="问题5-2">问题（5%）</h3>
+<ol type="1">
+<li><p>动态链接库在运行时也需要查找库的位置，在 <code>Linux</code> 系统中，运行时动态链接库的查找顺序是怎样的？</p></li>
+<li><p>使用 <code>size main</code> 查看编译出的可执行文件占据的空间，与使用静态链接库相比占用空间有何变化？哪些部分的哪些代码会导致编译出文件的占用空间发生这种变化？</p></li>
+<li><p>编译动态链接库时 <code>-fPIC</code> 的作用是什么，不加会有什么后果？</p></li>
+<li><p>在 <code>Linux</code> 系统中，现在被广泛使用的公开的动态链接库如何进行版本替换或共存？</p></li>
+</ol>
+<h2 id="task-4-h---cool-down">Task 4 (H) - Cool Down</h2>
+<h3 id="todo3">TODO（3%）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">task4</span><br><span class="line">├── Makefile    // TODO</span><br><span class="line">├── main.cpp    // TODO</span><br><span class="line">├── some.cpp</span><br><span class="line">└── some.h</span><br></pre></td></tr></table></figure>
+<p>代码同 <code>task0</code>，修改 <code>main.cpp</code> 中的错误代码，在 <code>Makefile</code> 中编写编译命令，使用如下命令编译并运行程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br><span class="line">make main</span><br><span class="line">./main</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+<p>但是，不允许使用 <code>g++</code> 编译好整个完整的程序。</p>
+<p>要求先使用 <code>gcc -c</code> 将 <code>C++</code> 代码编译为各自的 <code>elf</code> 文件（<code>.o</code>文件），再使用 <code>ld</code> 命令手动进行链接。</p>
+<h3 id="问题2">问题（2%）</h3>
+<ol type="1">
+<li><p>添加的动态链接库分别是什么，起什么作用？</p></li>
+<li><p>一个操作系统中只需要一个动态链接器吗？为什么？</p></li>
+</ol>
+<h2 id="task-5-h---new-world">Task 5 (H) - New World</h2>
+<h3 id="todo5">TODO（5%）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">task5</span><br><span class="line">├── login</span><br><span class="line">├── task5.sh    // TODO</span><br><span class="line">└── your_code.* // TODO</span><br></pre></td></tr></table></figure>
+<p>运行已经编译好的 <code>login</code> 程序之后能够输入一个密码字符串，如果密码与预先设定的密码一样，就会输出 <code>login successful</code>；如果密码错误，就会输出 <code>incorrect password</code>。此外还会输出两个数字，无需在意。</p>
+<p>目标是在不更改 <code>login</code> 程序的情况下，让 <code>login</code> 程序输出 <code>login successful</code>。</p>
+<p>将进行的操作写入 <code>task5.sh</code> 中。</p>
+<h2 id="作者">作者</h2>
+<ul>
+<li>Ximing Yang (2019 Fall; 2020 Fall)</li>
+<li>Zhibo Zhang (2023 Fall)</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">实验简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD"><span class="toc-number">1.1.</span> <span class="toc-text">下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C"><span class="toc-number">1.2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">提交</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-make-%E5%92%8C-makefile"><span class="toc-number">2.</span> <span class="toc-text">什么是 make 和 Makefile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-0---warm-up"><span class="toc-number">3.</span> <span class="toc-text">Task 0 - Warm Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86"><span class="toc-number">3.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo15"><span class="toc-number">3.2.</span> <span class="toc-text">TODO（15%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-1---debug"><span class="toc-number">4.</span> <span class="toc-text">Task 1 - DEBUG</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86-1"><span class="toc-number">4.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo20"><span class="toc-number">4.2.</span> <span class="toc-text">TODO（20%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%985"><span class="toc-number">4.3.</span> <span class="toc-text">问题（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-2---static-link-library"><span class="toc-number">5.</span> <span class="toc-text">Task 2 - Static Link Library</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86-2"><span class="toc-number">5.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo20-1"><span class="toc-number">5.2.</span> <span class="toc-text">TODO（20%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%985-1"><span class="toc-number">5.3.</span> <span class="toc-text">问题（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-3---dynamic-link-library"><span class="toc-number">6.</span> <span class="toc-text">Task 3 - Dynamic Link Library</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86-3"><span class="toc-number">6.1.</span> <span class="toc-text">知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#todo20-2"><span class="toc-number">6.2.</span> <span class="toc-text">TODO（20%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%985-2"><span class="toc-number">6.3.</span> <span class="toc-text">问题（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-4-h---cool-down"><span class="toc-number">7.</span> <span class="toc-text">Task 4 (H) - Cool Down</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#todo3"><span class="toc-number">7.1.</span> <span class="toc-text">TODO（3%）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%982"><span class="toc-number">7.2.</span> <span class="toc-text">问题（2%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#task-5-h---new-world"><span class="toc-number">8.</span> <span class="toc-text">Task 5 (H) - New World</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#todo5"><span class="toc-number">8.1.</span> <span class="toc-text">TODO（5%）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">9.</span> <span class="toc-text">作者</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/MakeLab/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/MakeLab/&text=MakeLab"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/MakeLab/&is_video=false&description=MakeLab"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MakeLab&body=Check out this article: https://cjinfdu.github.io/ics/MakeLab/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/MakeLab/&title=MakeLab"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/MakeLab/&name=MakeLab&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 FDUICS-2023助教组
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/ics/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/ics/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/ics/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/ics/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/ics/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/ics/js/main.js"></script>
+
+
+
+
+

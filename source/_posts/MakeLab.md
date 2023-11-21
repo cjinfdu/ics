@@ -26,10 +26,10 @@ makelab-handout/
 
 ### 运行
 
-在所有 `taskAll` 文件夹以外有一个测试脚本，使用它运行测试：
+在所有 `task` 文件夹以外有一个测试脚本，使用它运行测试：
 
 ```bash
-sh test.sh
+sh testAll.sh
 ```
 
 ### 提交
@@ -38,7 +38,7 @@ sh test.sh
 
 实验报告要求：
 
-1. 包含`sh test.sh` 的输出截图
+1. 包含`sh testAll.sh` 的输出截图
 2. 包含每个 `task` 的解决方案与附带问题的回答
 3. 内容简洁，条理清晰
 

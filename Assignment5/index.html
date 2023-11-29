@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="5.6 这道题说明了最小化一个计算中的操作数量不一定会提高它的性能。 A. 这个函数执行n个乘法和n个加法，是原始函数poly中乘法数量的一半 B. 我们可以看到，这里的性能限制计算是反复地计算表达式result&#x3D;a[i]+x*result。从来自上一次的迭代的result的值开始，我们必须先把它乘以x（5个时钟周期），然后把它加上a[i]（3个时钟周期）。因此，每次迭代需要8个时钟周期。正好等于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11.30 第五章习题">
+<meta property="og:url" content="https://cjinfdu.github.io/ics/Assignment5/index.html">
+<meta property="og:site_name" content="COMP130201.02 计算机系统基础">
+<meta property="og:description" content="5.6 这道题说明了最小化一个计算中的操作数量不一定会提高它的性能。 A. 这个函数执行n个乘法和n个加法，是原始函数poly中乘法数量的一半 B. 我们可以看到，这里的性能限制计算是反复地计算表达式result&#x3D;a[i]+x*result。从来自上一次的迭代的result的值开始，我们必须先把它乘以x（5个时钟周期），然后把它加上a[i]（3个时钟周期）。因此，每次迭代需要8个时钟周期。正好等于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cjinfdu.github.io/ics/Assignment5/image.png">
+<meta property="og:image" content="https://cjinfdu.github.io/ics/Assignment5/image-1.png">
+<meta property="og:image" content="https://cjinfdu.github.io/ics/Assignment5/image-2.png">
+<meta property="article:published_time" content="2023-11-30T00:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-29T18:53:54.904Z">
+<meta property="article:author" content="FDUICS-2023助教组">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cjinfdu.github.io/ics/Assignment5/image.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/ics/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/ics/images/android-chrome-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/ics/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>11.30 第五章习题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/ics/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/ics/MakeLab/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/Assignment5/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/Assignment5/&text=11.30 第五章习题"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/Assignment5/&is_video=false&description=11.30 第五章习题"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=11.30 第五章习题&body=Check out this article: https://cjinfdu.github.io/ics/Assignment5/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/Assignment5/&name=11.30 第五章习题&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-number">1.</span> <span class="toc-text">5.6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-1"><span class="toc-number">2.</span> <span class="toc-text">5.9</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-2"><span class="toc-number">3.</span> <span class="toc-text">5.13</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-3"><span class="toc-number">4.</span> <span class="toc-text">5.14</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-4"><span class="toc-number">5.</span> <span class="toc-text">5.16</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-5"><span class="toc-number">6.</span> <span class="toc-text">5.17</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-6"><span class="toc-number">7.</span> <span class="toc-text">5.18</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-7"><span class="toc-number">8.</span> <span class="toc-text">5.19</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        11.30 第五章习题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">COMP130201.02 计算机系统基础</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-11-30T00:00:00.000Z" itemprop="datePublished">2023-11-30</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="section">5.6</h3>
+<p>这道题说明了最小化一个计算中的操作数量不一定会提高它的性能。</p>
+<p>A. 这个函数执行<code>n</code>个乘法和<code>n</code>个加法，是原始函数<code>poly</code>中乘法数量的一半 B. 我们可以看到，这里的性能限制计算是反复地计算表达式<code>result=a[i]+x*result</code>。从来自上一次的迭代的<code>result</code>的值开始，我们必须先把它乘以<code>x</code>（5个时钟周期），然后把它加上<code>a[i]</code>（3个时钟周期）。因此，每次迭代需要8个时钟周期。正好等于我们测量到的CPE。 C. 虽然函数<code>poly</code>中每次迭代需要两个乘法，而不是一个，但是只有一条乘法是在每次迭代的关键路径上出现。</p>
+<h3 id="section-1">5.9</h3>
+<p>这道题说明了编码风格上的小变化能够让编译器更容易地察觉到使用条件传送的机会：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(i1 &lt; n &amp;&amp; i2 &lt; n)&#123;</span><br><span class="line">    <span class="type">long</span> v1 = src1[i1];</span><br><span class="line">    <span class="type">long</span> v2 = src2[i2];</span><br><span class="line">    <span class="type">long</span> take1 = v1 &lt; v2;</span><br><span class="line">    dst[i1+i2] = take1 ? v1 : v2;</span><br><span class="line">    i1 += take1;</span><br><span class="line">    i2 += (<span class="number">1</span>-take1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="section-2">5.13</h3>
+<p>A. 画图</p>
+<p><img src="image.png" alt="Alt text" style="width:50.0%;height:50.0%" /> <img src="image-1.png" alt="Alt text" style="width:50.0%;height:50.0%" /> <img src="image-2.png" alt="Alt text" style="width:50.0%;height:50.0%" /> 关键路径为第三幅图加粗部分</p>
+<ol start="2" type="A">
+<li><p>关键路径上只有浮点数加法CPE为3.0</p></li>
+<li><p>整数加法的延迟界限，CPE 为 1.00</p></li>
+<li><p>关键路径上只有浮点加法,结合图理解</p></li>
+</ol>
+<h3 id="section-3">5.14</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">inner4</span><span class="params">(vec_ptr u, vec_ptr v, <span class="type">data_t</span> *dest)</span> &#123;</span><br><span class="line">  <span class="type">long</span> i;</span><br><span class="line">  <span class="type">long</span> length = vec_length(u);</span><br><span class="line">  <span class="type">data_t</span> *udata = get_vec_start(u);</span><br><span class="line">  <span class="type">data_t</span> *vdata = get_vec_start(v);</span><br><span class="line">  <span class="type">data_t</span> sum = (<span class="type">data_t</span>) <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; length<span class="number">-6</span>; i+=<span class="number">6</span>) &#123;</span><br><span class="line">    sum = sum + udata[i] * vdata[i]</span><br><span class="line">              + udata[i+<span class="number">1</span>] * vdata[i+<span class="number">1</span>]</span><br><span class="line">              + udata[i+<span class="number">2</span>] * vdata[i+<span class="number">2</span>]</span><br><span class="line">              + udata[i+<span class="number">3</span>] * vdata[i+<span class="number">3</span>]</span><br><span class="line">              + udata[i+<span class="number">4</span>] * vdata[i+<span class="number">4</span>]</span><br><span class="line">              + udata[i+<span class="number">5</span>] * vdata[i+<span class="number">5</span>];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(; i &lt; length; i++) &#123;</span><br><span class="line">    sum = sum + udata[i] * vdata[i];</span><br><span class="line">  &#125;</span><br><span class="line">  *dest = sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol type="A">
+<li><p>虽然迭代次数减少为6/n，但是每次迭代中有6个乘法操作，所以关键路径上还是一共有n个乘法操作。</p></li>
+<li><p>同上</p></li>
+</ol>
+<h3 id="section-4">5.16</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">inner7</span><span class="params">(vec_ptr u, vec_ptr v, <span class="type">data_t</span> *dest)</span> &#123;</span><br><span class="line">    <span class="type">long</span> i;</span><br><span class="line">    <span class="type">long</span> length = vec_length(u);</span><br><span class="line">    <span class="type">long</span> limit = length - <span class="number">5</span>;</span><br><span class="line">    <span class="type">data_t</span> *udata = get_ver_start(u);</span><br><span class="line">    <span class="type">data_t</span> *vdata = get_vec_start(v);</span><br><span class="line">    <span class="type">data_t</span> sum = (<span class="type">data_t</span>)<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; limit; i += <span class="number">6</span>) &#123;</span><br><span class="line">        sum = sum + (udata[i] * vdata[i] +</span><br><span class="line">            (udata[i + <span class="number">1</span>] * vdata[i + <span class="number">1</span>] +</span><br><span class="line">            (udata[i + <span class="number">2</span>] * vdata[i + <span class="number">2</span>] +</span><br><span class="line">            (udata[i + <span class="number">3</span>] * vdata[i + <span class="number">3</span>] +</span><br><span class="line">            (udata[i + <span class="number">4</span>] * vdata[i + <span class="number">4</span>] +</span><br><span class="line">            udata[i + <span class="number">5</span>] * vdata[i + <span class="number">5</span>])))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (; i &lt; length; i++) &#123;</span><br><span class="line">        sum = sum + udata[i] * vdata[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    *dest = sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只需要用括号将后面两两括起来，括哪两个都可以，只要是两两括起来就可以</p>
+<h3 id="section-5">5.17</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">new_memset</span><span class="params">(<span class="type">void</span> *s, <span class="type">int</span> c, <span class="type">size_t</span> n)</span> &#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> w;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> *pw = (<span class="type">unsigned</span> <span class="type">char</span> *)&amp;w;</span><br><span class="line">    <span class="type">size_t</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (cnt &lt; K) &#123;</span><br><span class="line">        *pw++ = (<span class="type">unsigned</span> <span class="type">char</span>)c;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">size_t</span> i;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> *schar = s;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; (<span class="type">size_t</span>)schar % K != <span class="number">0</span> || i == n; i++) &#123;</span><br><span class="line">        *schar++ = (<span class="type">unsigned</span> <span class="type">char</span>)c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">size_t</span> limit = n - K + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (; i &lt; limit &amp;&amp; (<span class="type">int</span>)limit &gt; <span class="number">0</span>; i += K) &#123;</span><br><span class="line">        *(<span class="type">unsigned</span> <span class="type">long</span> *)schar = w;</span><br><span class="line">        schar += K;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (; i &lt; n; i++) &#123;</span><br><span class="line">        *schar++ = (<span class="type">unsigned</span> <span class="type">char</span>)c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意地址对齐</p>
+<p><strong>实际后面的题目比较开放，同学们也可以应用学到的程序优化技巧对自己以前写过的代码尝试优化。</strong></p>
+<h3 id="section-6">5.18</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">poly_6_3a</span><span class="params">(<span class="type">double</span> a[], <span class="type">double</span> x, <span class="type">long</span> degree)</span> &#123;</span><br><span class="line">  <span class="type">long</span> i = <span class="number">1</span>;</span><br><span class="line">  <span class="type">double</span> result = a[<span class="number">0</span>];</span><br><span class="line">  <span class="type">double</span> result1 = <span class="number">0</span>;</span><br><span class="line">  <span class="type">double</span> result2 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">double</span> xpwr = x;</span><br><span class="line">  <span class="type">double</span> xpwr1 = x * x * x;</span><br><span class="line">  <span class="type">double</span> xpwr2 = x * x * x * x * x;</span><br><span class="line"></span><br><span class="line">  <span class="type">double</span> xpwr_step = x * x * x * x * x * x;</span><br><span class="line">  <span class="keyword">for</span> (; i &lt; degree - <span class="number">5</span>; i+=<span class="number">6</span>) &#123;</span><br><span class="line">    result = result + (a[i]*xpwr + a[i+<span class="number">1</span>]*xpwr*x);</span><br><span class="line">    result1 = result1 + (a[i+<span class="number">2</span>]*xpwr1 + a[i+<span class="number">3</span>]*xpwr1*x);</span><br><span class="line">    result2 = result2 + (a[i+<span class="number">4</span>]*xpwr2 + a[i+<span class="number">5</span>]*xpwr2*x);</span><br><span class="line"></span><br><span class="line">    xpwr *= xpwr_step;</span><br><span class="line">    xpwr1 *= xpwr_step;</span><br><span class="line">    xpwr2 *= xpwr_step;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (; i &lt;= degree; i++) &#123;</span><br><span class="line">    result = result + a[i]*xpwr;</span><br><span class="line">    xpwr *= x;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result + result1 + result2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="section-7">5.19</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">psumnew</span><span class="params">(<span class="type">float</span> a[], <span class="type">float</span> p[], <span class="type">long</span> n)</span> &#123;</span><br><span class="line">  <span class="type">long</span> i;</span><br><span class="line">  <span class="type">float</span> val, last_val;</span><br><span class="line">  <span class="type">float</span> tmp1, tmp2, tmp3, tmp4;</span><br><span class="line">  last_val = p[<span class="number">0</span>] = a[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n - <span class="number">4</span>; i++) &#123;</span><br><span class="line">    temp1 = last_val + a[i];</span><br><span class="line">    temp2 = temp1 + a[i+<span class="number">1</span>];</span><br><span class="line">    temp3 = temp2 + a[i+<span class="number">2</span>];</span><br><span class="line">    temp4 = temp3 + a[i+<span class="number">3</span>];</span><br><span class="line">    p[i] = temp1;</span><br><span class="line">    p[i+<span class="number">1</span>] = temp2;</span><br><span class="line">    p[i+<span class="number">2</span>] = temp3;</span><br><span class="line">    p[i+<span class="number">3</span>] = temp4;</span><br><span class="line">    last_val = temp4;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (; i &lt; n; i++) &#123;</span><br><span class="line">    last_val += a[i];</span><br><span class="line">    p[i] = last_val;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-number">1.</span> <span class="toc-text">5.6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-1"><span class="toc-number">2.</span> <span class="toc-text">5.9</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-2"><span class="toc-number">3.</span> <span class="toc-text">5.13</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-3"><span class="toc-number">4.</span> <span class="toc-text">5.14</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-4"><span class="toc-number">5.</span> <span class="toc-text">5.16</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-5"><span class="toc-number">6.</span> <span class="toc-text">5.17</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-6"><span class="toc-number">7.</span> <span class="toc-text">5.18</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-7"><span class="toc-number">8.</span> <span class="toc-text">5.19</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cjinfdu.github.io/ics/Assignment5/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cjinfdu.github.io/ics/Assignment5/&text=11.30 第五章习题"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cjinfdu.github.io/ics/Assignment5/&is_video=false&description=11.30 第五章习题"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=11.30 第五章习题&body=Check out this article: https://cjinfdu.github.io/ics/Assignment5/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cjinfdu.github.io/ics/Assignment5/&title=11.30 第五章习题"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cjinfdu.github.io/ics/Assignment5/&name=11.30 第五章习题&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 FDUICS-2023助教组
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/ics/">Home</a></li>
+         
+          <li><a href="/ics/staff/">Staff</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/cjinfdu/ics">Github</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/ics/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/ics/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/ics/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/ics/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/ics/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/ics/js/main.js"></script>
+
+
+
+
+

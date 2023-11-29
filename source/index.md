@@ -40,11 +40,11 @@ School of Computer Science, Fudan University
 | 10   | 10/13/2023 | 机器码 III                    |                                                     |
 | 11   | 10/19/2023 | BombLab答疑                   |                                                     |
 | 12   | 10/20/2023 | 机器码 IV                     |                                                     |
-| 13   | 10/26/2023 | CoroutineLab发布              | [Lab3-CoroutineLab](CoroutineLab) (Due: 11/29/2023) |
+| 13   | 10/26/2023 | CoroutineLab发布              | [Lab3-CoroutineLab](CoroutineLab) (Due: 12/06/2023) |
 | 14   | 10/27/2023 | 处理器 I                      |                                                     |
 | 15   | 11/02/2023 | BombLab讲解                   | [Lab2-BombLab writeup](BombLab-Comment)             |
 | 16   | 11/03/2023 | 处理器 II                     |                                                     |
-| 17   | 11/09/2023 | CacheLab发布                  | [Lab4-CacheLab](CacheLab) (Due: 12/06/2023)         |
+| 17   | 11/09/2023 | CacheLab发布                  | [Lab4-CacheLab](CacheLab) (Due: 12/13/2023)         |
 |      |            | 第三、四章习题讲解            | [第三章习题讲义](Assignment2)                       |
 | 18   | 11/10/2023 | 优化 I                        |                                                     |
 | 19   | 11/16/2023 | CoroutineLab答疑              |                                                     |
@@ -52,12 +52,12 @@ School of Computer Science, Fudan University
 | 21   | 11/23/2023 | MakeLab发布                   | [Lab5-MakeLab](MakeLab) (Due: 12/13/2023)           |
 |      |            | Final Project发布             | [Final Project](PJ) (Due: 12/20/2023)               |
 | 22   | 11/24/2023 | 存储器 I                      |                                                     |
-| 23   | 11/30/2023 | CoroutineLab讲解              |                                                     |
-|      |            | 第六章习题讲解                |                                                     |
+| 23   | 11/30/2023 | 第五章习题讲解                | [第五章习题讲义](Assignment5)                       |
 | 24   | 12/01/2023 | 存储器 II                     |                                                     |
-| 25   | 12/07/2023 | CacheLab讲解                  |                                                     |
+| 25   | 12/07/2023 | CoroutineLab讲解              |                                                     |
 | 26   | 12/08/2023 | 链接 I                        |                                                     |
 | 27   | 12/14/2023 | MakeLab讲解                   |                                                     |
+|      |            | CacheLab讲解                  |                                                     |
 |      |            | 第七章习题讲解                |                                                     |
 | 28   | 12/15/2023 | 异常控制流 I                  |                                                     |
 | 29   | 12/21/2023 | 第八章习题讲解                |                                                     |

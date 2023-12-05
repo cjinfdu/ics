@@ -49,7 +49,7 @@ School of Computer Science, Fudan University
 | 18   | 11/10/2023 | 优化 I                        |                                                     |
 | 19   | 11/16/2023 | CoroutineLab答疑              |                                                     |
 | 20   | 11/17/2023 | 优化 II                       |                                                     |
-| 21   | 11/23/2023 | MakeLab发布                   | [Lab5-MakeLab](MakeLab) (Due: 12/13/2023)           |
+| 21   | 11/23/2023 | MakeLab发布                   | [Lab5-MakeLab](MakeLab) (~~Due: 12/13/2023~~)       |
 |      |            | Final Project发布             | [Final Project](PJ) (Due: 12/20/2023)               |
 | 22   | 11/24/2023 | 存储器 I                      |                                                     |
 | 23   | 11/30/2023 | 第五章习题讲解                | [第五章习题讲义](Assignment5)                       |

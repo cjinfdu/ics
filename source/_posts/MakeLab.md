@@ -3,7 +3,8 @@ title: MakeLab
 date: 2023-11-23 08:00:00
 ---
 
-> Deadline: 2023-12-13 23:59:59
+> ~~Deadline: 2023-12-13 23:59:59~~
+> Optional Lab!
 
 ## 实验简介
 
